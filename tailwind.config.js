@@ -6,7 +6,20 @@ module.exports = {
       fontFamily: {
         sans: ["Nunito Sans", "sans-serif"],
       },
+      width: {
+        70: "70%",
+      },
     },
   },
   plugins: [],
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        enforce: "pre",
+        use: ["source-map-loader"],
+        exclude: /node_modules\/(?!(parse5)\/).*/,
+      },
+    ],
+  },
 };
