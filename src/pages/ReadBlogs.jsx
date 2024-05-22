@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import axios from "../api/axios";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import BlogCard from "../components/BlogCard";
 
 const ReadBlogs = () => {
   const [blogs, setBlogs] = useState([]);
@@ -50,21 +48,7 @@ const ReadBlogs = () => {
                   </SkeletonTheme>
                 </div>
               ))
-            : blogs.map((blog) => (
-                <Link
-                  key={blog._id}
-                  to={`/blogs/${blog._id}`}
-                  className="bg-yellow-500 text-white p-4 m-2 w-full lg:w-70 md:w-4/5 hover:bg-yellow-600 transition duration-300"
-                >
-                  <h2 className="text-xl font-semibold mb-2">{blog.title}</h2>
-                  <p className="text-lg">
-                    <ReactMarkdown
-                      children={blog.description.slice(0, 95) + " ..."}
-                      remarkPlugins={[remarkGfm]}
-                    />
-                  </p>
-                </Link>
-              ))}
+            : blogs.map((blog) => <BlogCard blog={blog} from="readBlogs" />)}
         </div>
       </div>
     </div>

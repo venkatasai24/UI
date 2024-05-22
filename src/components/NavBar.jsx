@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useLogout from "../hooks/useLogout";
 import useAuth from "../hooks/useAuth";
+import Logo from "./Logo";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,9 +24,7 @@ const NavBar = () => {
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between">
             <Link to="/">
-              <div className="flex items-center">
-                <span className="text-white text-lg font-bold">UI</span>
-              </div>
+              <Logo />
             </Link>
             <div className="hidden lg:flex justify-around">
               {auth?.email ? (
@@ -38,9 +37,7 @@ const NavBar = () => {
                   </Link>
                   <button
                     className="text-white hover:bg-blue-800 px-3 py-2 rounded-md text-md transition duration-300"
-                    onClick={() => {
-                      signOut();
-                    }}
+                    onClick={signOut}
                   >
                     Logout
                   </button>
@@ -107,9 +104,7 @@ const NavBar = () => {
                   </Link>
                   <button
                     className="text-white hover:bg-blue-800 px-3 py-2 rounded-md text-md transition duration-300 self-start"
-                    onClick={() => {
-                      signOut();
-                    }}
+                    onClick={signOut}
                   >
                     Logout
                   </button>

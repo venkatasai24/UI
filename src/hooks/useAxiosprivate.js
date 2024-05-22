@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { axiosPrivate } from "../api/axios";
 import useRefreshToken from "./useRefreshToken";
 import useAuth from "./useAuth";
+import { jwtDecode } from "jwt-decode";
 
 const useAxiosPrivate = () => {
   const refresh = useRefreshToken();
@@ -9,9 +10,21 @@ const useAxiosPrivate = () => {
 
   useEffect(() => {
     const requestIntercept = axiosPrivate.interceptors.request.use(
-      (config) => {
+      async (config) => {
         if (!config.headers["Authorization"]) {
-          config.headers["Authorization"] = `Bearer ${auth?.accessToken}`;
+          const accessToken = auth?.accessToken;
+          if (accessToken) {
+            const decodedToken = jwtDecode(accessToken);
+            const currentTime = Date.now() / 1000;
+            if (decodedToken.exp < currentTime) {
+              // Access token is expired, refresh it
+              const newAccessToken = await refresh();
+              config.headers["Authorization"] = `Bearer ${newAccessToken}`;
+            } else {
+              // Access token is still valid, use it
+              config.headers["Authorization"] = `Bearer ${accessToken}`;
+            }
+          }
         }
         return config;
       },

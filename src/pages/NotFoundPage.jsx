@@ -11,7 +11,7 @@ const NotFoundPage = () => {
           to="/"
           className="text-white bg-red-500 hover:bg-red-600 rounded-md px-3 py-2 mt-4 transition duration-300"
         >
-          Go Back
+          Go Home
         </Link>
       </section>
     </>

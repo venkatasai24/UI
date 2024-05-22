@@ -3,6 +3,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import useRefreshToken from "../hooks/useRefreshToken";
 import useAuth from "../hooks/useAuth";
+import LoadingSpinner from "../components/Spinner";
 
 const PersistLogin = () => {
   const { auth } = useAuth();
@@ -38,7 +39,7 @@ const PersistLogin = () => {
   //   console.log(`aT: ${JSON.stringify(auth)}`);
   // }, [isLoading]);
 
-  return <>{isLoading ? <>Loading...</> : <Outlet />}</>;
+  return <>{isLoading ? <LoadingSpinner /> : <Outlet />}</>;
 };
 
 export default PersistLogin;
