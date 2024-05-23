@@ -11,6 +11,7 @@ const ProfilePage = () => {
   const [error, setError] = useState("");
 
   const getUser = async () => {
+    setLoading(true);
     try {
       const response = await axiosPrivate.get("/users/profile");
       setUserData(response.data);
@@ -20,7 +21,6 @@ const ProfilePage = () => {
       const blogResponses = await Promise.all(blogPromises);
       setBlogs(blogResponses.map((res) => res.data));
     } catch (error) {
-      setLoading(false);
       if (error?.response?.data?.message) setError(error.response.data.message);
       else setError(error.message);
     } finally {
@@ -34,12 +34,15 @@ const ProfilePage = () => {
       "Are you sure you want to delete this blog? This action cannot be undone."
     );
     if (!confirmDelete) return;
-
+    setLoading(true);
     try {
       await axiosPrivate.delete(`/${id}`);
-      getUser(); // Refresh the user data after deleting the blog
+      await getUser(); // Refresh the user data after deleting the blog
     } catch (error) {
-      console.log(error);
+      if (error?.response?.data?.message) setError(error.response.data.message);
+      else setError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
