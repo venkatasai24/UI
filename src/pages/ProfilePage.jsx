@@ -19,7 +19,7 @@ const ProfilePage = () => {
       const blogPromises = response.data.blogs.map((blogId) =>
         axios.get(`/${blogId}`)
       );
-      const blogResponses = await Promise.all(blogPromises);
+      const blogResponses = (await Promise.all(blogPromises)).reverse();
       setBlogs(blogResponses.map((res) => res.data));
     } catch (error) {
       if (error?.response?.data?.message) err = error.response.data.message;

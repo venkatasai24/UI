@@ -1,15 +1,16 @@
-import axios from "../api/axios";
+import useAxiosPrivate from "./useAxiosprivate";
 import useAuth from "./useAuth";
+import { showToast } from "../components/Toast";
 
 const useLogout = () => {
   const { setAuth } = useAuth();
+  const axiosPrivate = useAxiosPrivate();
 
   const logout = async () => {
     setAuth({});
     try {
-      await axios("/users/logout", {
-        withCredentials: true,
-      });
+      await axiosPrivate("/users/logout");
+      showToast("", "Logged out successfully!!");
     } catch (err) {
       console.error(err);
     }
