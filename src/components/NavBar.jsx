@@ -20,13 +20,13 @@ const NavBar = () => {
 
   return (
     <>
-      <nav className="bg-gradient-to-r from-purple-600 to-blue-600 p-4 sticky top-0 z-10">
+      <nav className="bg-gradient-to-r from-purple-600 to-blue-600 p-4 sticky top-0 z-100 shadow-lg">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between">
             <Link to="/">
               <Logo />
             </Link>
-            <div className="hidden lg:flex justify-around">
+            <div className="hidden lg:flex space-x-4">
               {auth?.email ? (
                 <>
                   <Link
@@ -63,7 +63,7 @@ const NavBar = () => {
             <div className="flex lg:hidden">
               <button
                 type="button"
-                className="text-white focus:outline-none focus:text-gray-300"
+                className="text-white focus:outline-none focus:text-gray-300 transition-transform transform duration-300"
                 aria-label="Toggle menu"
                 onClick={toggleMenu}
               >
@@ -88,22 +88,22 @@ const NavBar = () => {
             </div>
           </div>
           {/* Toggle menu for smaller screens */}
-          {isOpen && (
-            <div
-              className={`flex flex-col lg:hidden mt-2 transition-all duration-300 ${
-                isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-              } items-start`}
-            >
+          <div
+            className={`${
+              isOpen ? "opacity-100" : "opacity-0"
+            } absolute top-14 left-0 w-full lg:hidden p-2 transition-all duration-300 transform bg-gradient-to-r from-purple-600 to-blue-600 z-10 shadow-lg`}
+          >
+            <div className="flex flex-col items-start">
               {auth?.email ? (
                 <>
                   <Link
                     to="/profile"
-                    className="text-white hover:bg-blue-800 px-3 py-2 rounded-md text-md transition duration-300"
+                    className="text-white hover:bg-blue-800 px-4 py-2 rounded-md text-md transition duration-300"
                   >
                     Profile
                   </Link>
                   <button
-                    className="text-white hover:bg-blue-800 px-3 py-2 rounded-md text-md transition duration-300 self-start"
+                    className="text-white hover:bg-blue-800 px-4 py-2 rounded-md text-md transition duration-300"
                     onClick={signOut}
                   >
                     Logout
@@ -113,20 +113,20 @@ const NavBar = () => {
                 <>
                   <Link
                     to="/register"
-                    className="text-white hover:bg-blue-800 px-3 py-2 rounded-md text-md transition duration-300 self-start"
+                    className="text-white hover:bg-blue-800 px-4 py-2 rounded-md text-md transition duration-300"
                   >
                     Register
                   </Link>
                   <Link
                     to="/login"
-                    className="text-white hover:bg-blue-800 px-3 py-2 rounded-md text-md transition duration-300 self-start"
+                    className="text-white hover:bg-blue-800 px-4 py-2 rounded-md text-md transition duration-300"
                   >
                     Login
                   </Link>
                 </>
               )}
             </div>
-          )}
+          </div>
         </div>
       </nav>
     </>

@@ -51,17 +51,17 @@ const ProfilePage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-purple-600 to-blue-600 p-6">
+    <div className="min-h-screen bg-gradient-to-r from-purple-600 to-blue-600 p-4 lg:p-8">
       {error && (
         <p className="text-red-500 bg-red-100 p-2 rounded-md mb-6 text-center w-max">
           {error}
         </p>
       )}
       <div className="flex flex-col lg:flex-row gap-6">
-        <div className="w-full lg:w-1/3">
-          <h1 className="text-3xl font-bold text-white mb-4">Profile</h1>
+        <div className="text-white w-full lg:w-1/3">
+          <h1 className="text-3xl lg:text-4xl font-bold m-2">Profile</h1>
           {userData ? (
-            <div className="bg-green-500 text-white shadow-md p-6 overflow-auto">
+            <div className="bg-green-500 text-white shadow-md p-4 m-2 overflow-auto">
               <p className="text-xl mb-2">
                 <strong>Name :</strong> {userData.name}
               </p>
@@ -83,8 +83,8 @@ const ProfilePage = () => {
             </>
           )}
         </div>
-        <div className="w-full lg:w-2/3">
-          <h2 className="text-3xl font-bold text-white mb-4">My Blogs</h2>
+        <div className="text-white w-full lg:w-2/3">
+          <h2 className="text-3xl lg:text-4xl font-bold m-2">My Blogs</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {loading ? (
               <p className="text-blue-500 bg-blue-100 p-2 rounded-md mb-2 text-center">
