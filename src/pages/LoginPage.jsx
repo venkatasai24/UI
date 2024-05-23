@@ -3,14 +3,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import axios from "../api/axios";
 import AuthForm from "../components/AuthForm";
+import { showToast } from "../components/Toast";
 
 const LoginPage = () => {
   const { setAuth } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -22,7 +21,7 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    let err = null;
     setLoading(true);
     try {
       const response = await axios.post(
@@ -34,26 +33,27 @@ const LoginPage = () => {
         }
       );
       setLoading(false);
-      setError("");
       const accessToken = response?.data?.accessToken;
       setAuth({ email, accessToken });
-      setSuccess(`Hi ${email}! You will be redirected shortly...`);
+      showToast("", `Hi ${email}!`);
+      // Delay navigation to ensure toast is displayed
       setTimeout(() => {
         navigate(from, { replace: true });
-      }, 4000);
+      }, 2000); // Adjust the delay as needed
     } catch (error) {
-      console.log(error);
+      if (error?.response?.data?.message) err = error.response.data.message;
+      else err = error.message;
+    } finally {
       setLoading(false);
-      if (error?.response?.data?.message) setError(error.response.data.message);
-      else setError(error.message);
+      if (err) {
+        showToast(err, "");
+      }
     }
   };
 
   return (
     <AuthForm
       handleSubmit={handleSubmit}
-      error={error}
-      success={success}
       loading={loading}
       email={email}
       setEmail={setEmail}

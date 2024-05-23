@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 const AuthForm = ({
   from,
   handleSubmit,
-  error,
-  success,
   loading,
   name,
   setName,
@@ -34,16 +32,6 @@ const AuthForm = ({
           </p>
 
           <form className="space-y-4" onSubmit={handleSubmit}>
-            {error && (
-              <p className="text-red-500 bg-red-100 p-2 rounded-md mb-2 text-center">
-                {error}
-              </p>
-            )}
-            {success && (
-              <p className="text-green-500 bg-green-100 p-2 rounded-md mb-2 text-center">
-                {success}
-              </p>
-            )}
             {loading && (
               <p className="text-blue-500 bg-blue-100 p-2 rounded-md mb-2 text-center">
                 Loading ...

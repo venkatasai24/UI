@@ -4,6 +4,7 @@ import useAxiosPrivate from "../hooks/useAxiosprivate";
 import axios from "../api/axios";
 import BlogWritingCard from "../components/BlogWritingCard";
 import SkeletonBlog from "../components/SkeletonBlog";
+import { showToast } from "../components/Toast";
 
 const EditBlogPage = () => {
   const { id } = useParams();
@@ -13,17 +14,22 @@ const EditBlogPage = () => {
   const [saving, setSaving] = useState(false);
   const [preview, setPreview] = useState(false);
   const axiosPrivate = useAxiosPrivate();
-  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchBlog = async () => {
+      let err = null;
+      setLoading(true);
       try {
         const response = await axios.get(`/${id}`);
         setBlog(response.data);
       } catch (error) {
-        console.error("Error fetching blog:", error);
+        if (error?.response?.data?.message) err = error.response.data.message;
+        else err = error.message;
       } finally {
         setLoading(false);
+        if (err) {
+          showToast(err, "");
+        }
       }
     };
 
@@ -37,16 +43,22 @@ const EditBlogPage = () => {
 
   const handleSubmitForm = async (e) => {
     e.preventDefault();
+    let err = null;
     setSaving(true);
     try {
       await axiosPrivate.put(`/${id}`, blog);
-      navigate(`/blogs/${id}`);
+      showToast("", "Blog updated successfully!!");
+      setTimeout(() => {
+        navigate(`/blogs/${id}`);
+      }, 2000);
     } catch (error) {
-      setLoading(false);
-      if (error?.response?.data?.message) setError(error.response.data.message);
-      else setError(error.message);
+      if (error?.response?.data?.message) err = error.response.data.message;
+      else err = error.message;
     } finally {
       setSaving(false);
+      if (err) {
+        showToast(err, "");
+      }
     }
   };
 
@@ -57,11 +69,6 @@ const EditBlogPage = () => {
   return (
     <div className="bg-gradient-to-r from-purple-600 to-blue-600 min-h-screen flex flex-col items-start text-white p-4 lg:p-8">
       <div className="w-full lg:w-70 md:w-4/5 text-left bg-yellow-500 p-6">
-        {error && (
-          <p className="text-red-500 bg-red-100 p-2 rounded-md mb-2 text-center">
-            {error}
-          </p>
-        )}
         {loading ? (
           <SkeletonBlog />
         ) : (

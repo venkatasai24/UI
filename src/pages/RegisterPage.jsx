@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../api/axios";
 import AuthForm from "../components/AuthForm";
+import { showToast } from "../components/Toast";
 
 const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -10,8 +11,6 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [password1, setPassword1] = useState("");
   const [name, setName] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -30,18 +29,22 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let err = null;
     setLoading(true);
-    setError("");
     if (password !== password1) {
       setLoading(false);
-      return setError("passwords doesn't match!!");
+      err = "passwords doesn't match!!";
+      showToast(err, "");
+      return;
     }
     // Password Validation
-    // if (!validatePassword(password)) {
-    //   return setError(
-    //     "Password must be at least 8 characters long and contain a lowercase letter, uppercase letter, number, and symbol."
-    //   );
-    // }
+    if (!validatePassword(password)) {
+      setLoading(false);
+      err =
+        "Password must be at least 8 characters long and contain a lowercase letter, uppercase letter, number, and symbol.";
+      showToast(err, "");
+      return;
+    }
     try {
       await axios.post("/users/register", {
         name,
@@ -49,22 +52,22 @@ const RegisterPage = () => {
         password,
       });
       setLoading(false);
-      setError(""); // Clear error message
-      setSuccess(
+      showToast(
+        "",
         "Accounted created successfully..You will be redirected to the login page.."
       );
-      // Display success message for a few seconds before redirecting
-      const timeoutId = setTimeout(() => {
+      // Delay navigation to ensure toast is displayed
+      setTimeout(() => {
         navigate("/login");
-      }, 5000); // Adjust timeout duration as needed (in milliseconds)
-
-      // Cleanup function to clear timeout if component unmounts prematurely
-      return () => clearTimeout(timeoutId);
+      }, 2000); // Adjust the delay as needed
     } catch (error) {
-      console.log(error);
+      if (error?.response?.data?.message) err = error.response.data.message;
+      else err = error.message;
+    } finally {
       setLoading(false);
-      if (error?.response?.data?.message) setError(error.response.data.message);
-      else setError(error.message);
+      if (err) {
+        showToast(err, "");
+      }
     }
   };
 
@@ -72,8 +75,6 @@ const RegisterPage = () => {
     <AuthForm
       from="RegisterPage"
       handleSubmit={handleSubmit}
-      error={error}
-      success={success}
       loading={loading}
       name={name}
       setName={setName}

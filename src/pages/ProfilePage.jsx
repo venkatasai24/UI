@@ -2,15 +2,16 @@ import React, { useEffect, useState } from "react";
 import useAxiosPrivate from "../hooks/useAxiosprivate";
 import axios from "../api/axios";
 import BlogCard from "../components/BlogCard";
+import { showToast } from "../components/Toast";
 
 const ProfilePage = () => {
   const axiosPrivate = useAxiosPrivate();
   const [userData, setUserData] = useState(null);
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
 
   const getUser = async () => {
+    let err = null;
     setLoading(true);
     try {
       const response = await axiosPrivate.get("/users/profile");
@@ -21,10 +22,13 @@ const ProfilePage = () => {
       const blogResponses = await Promise.all(blogPromises);
       setBlogs(blogResponses.map((res) => res.data));
     } catch (error) {
-      if (error?.response?.data?.message) setError(error.response.data.message);
-      else setError(error.message);
+      if (error?.response?.data?.message) err = error.response.data.message;
+      else err = error.message;
     } finally {
       setLoading(false);
+      if (err) {
+        showToast(err, "");
+      }
     }
   };
 
@@ -34,15 +38,20 @@ const ProfilePage = () => {
       "Are you sure you want to delete this blog? This action cannot be undone."
     );
     if (!confirmDelete) return;
+    let err = null;
     setLoading(true);
     try {
       await axiosPrivate.delete(`/${id}`);
+      showToast("", "Blog deleted successfully!!");
       await getUser(); // Refresh the user data after deleting the blog
     } catch (error) {
-      if (error?.response?.data?.message) setError(error.response.data.message);
-      else setError(error.message);
+      if (error?.response?.data?.message) err = error.response.data.message;
+      else err = error.message;
     } finally {
       setLoading(false);
+      if (err) {
+        showToast(err, "");
+      }
     }
   };
 
@@ -52,11 +61,6 @@ const ProfilePage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-purple-600 to-blue-600 p-4 lg:p-8">
-      {error && (
-        <p className="text-red-500 bg-red-100 p-2 rounded-md mb-6 text-center w-max">
-          {error}
-        </p>
-      )}
       <div className="flex flex-col lg:flex-row gap-6">
         <div className="text-white w-full lg:w-1/3">
           <h1 className="text-3xl lg:text-4xl font-bold m-2">Profile</h1>
@@ -75,7 +79,7 @@ const ProfilePage = () => {
             </div>
           ) : (
             <>
-              {!error && (
+              {loading && (
                 <p className="text-blue-500 bg-blue-100 p-2 rounded-md mb-2 text-center">
                   Loading ...
                 </p>

@@ -98,12 +98,12 @@ const NavBar = () => {
                 <>
                   <Link
                     to="/profile"
-                    className="text-white hover:bg-blue-800 px-4 py-2 rounded-md text-md transition duration-300"
+                    className="text-white hover:bg-purple-800 px-4 py-2 rounded-md text-md transition duration-300"
                   >
                     Profile
                   </Link>
                   <button
-                    className="text-white hover:bg-blue-800 px-4 py-2 rounded-md text-md transition duration-300"
+                    className="text-white hover:bg-purple-800 px-4 py-2 rounded-md text-md transition duration-300"
                     onClick={signOut}
                   >
                     Logout
@@ -113,13 +113,13 @@ const NavBar = () => {
                 <>
                   <Link
                     to="/register"
-                    className="text-white hover:bg-blue-800 px-4 py-2 rounded-md text-md transition duration-300"
+                    className="text-white hover:bg-purple-800 px-4 py-2 rounded-md text-md transition duration-300"
                   >
                     Register
                   </Link>
                   <Link
                     to="/login"
-                    className="text-white hover:bg-blue-800 px-4 py-2 rounded-md text-md transition duration-300"
+                    className="text-white hover:bg-purple-800 px-4 py-2 rounded-md text-md transition duration-300"
                   >
                     Login
                   </Link>
