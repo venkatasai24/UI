@@ -10,6 +10,7 @@ import { Route, Routes } from "react-router-dom";
 import RequireAuth from "./utils/RequireAuth";
 // import PersistLogin from "./utils/persistLogin";
 import ProfilePage from "./pages/ProfilePage";
+import EditBlogPage from "./pages/EditBlogPage";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route element={<RequireAuth />}>
             <Route path="/write-blog" element={<WriteBlog />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/blogs/:id/edit" element={<EditBlogPage />} />
           </Route>
           {/* </Route> */}
           <Route path="/*" element={<NotFoundPage />} />
