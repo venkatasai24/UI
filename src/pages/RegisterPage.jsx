@@ -38,13 +38,13 @@ const RegisterPage = () => {
       return;
     }
     // Password Validation
-    if (!validatePassword(password)) {
-      setLoading(false);
-      err =
-        "Password must be at least 8 characters long and contain a lowercase letter, uppercase letter, number, and symbol.";
-      showToast(err, "");
-      return;
-    }
+    // if (!validatePassword(password)) {
+    //   setLoading(false);
+    //   err =
+    //     "Password must be at least 8 characters long and contain a lowercase letter, uppercase letter, number, and symbol.";
+    //   showToast(err, "");
+    //   return;
+    // }
     try {
       await axios.post("/users/register", {
         name,

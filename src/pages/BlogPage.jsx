@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "../api/axios";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -45,17 +45,23 @@ const BlogPage = () => {
           blog && (
             <>
               <div className="w-full lg:w-70 md:w-4/5 text-left bg-yellow-500 p-6">
-                <h1 className="text-3xl lg:text-4xl font-bold mb-4">
-                  {blog.title}
-                </h1>
-                <p className="text-lg mb-4 whitespace-pre-line">
+                <h1 className="text-3xl lg:text-4xl font-bold">{blog.title}</h1>
+                <p className="text-sm mb-4">
+                  by{" "}
+                  <Link
+                    className="text-green-600 hover:underline"
+                    to={`/view-profile/${blog.createdBy}`}
+                  >
+                    {" "}
+                    {blog.createdBy}
+                  </Link>{" "}
+                  , {new Date(blog.createdAt).toLocaleDateString()}
+                </p>
+                <p className="text-lg whitespace-pre-line">
                   <ReactMarkdown
                     children={blog.description}
                     remarkPlugins={[remarkGfm]}
                   />
-                </p>
-                <p className="text-sm mt-4 font-bold">
-                  Created by: {blog.createdBy}
                 </p>
               </div>
             </>

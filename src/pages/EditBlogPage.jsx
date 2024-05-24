@@ -68,7 +68,10 @@ const EditBlogPage = () => {
 
   return (
     <div className="bg-gradient-to-r from-purple-600 to-blue-600 min-h-screen flex flex-col items-start text-white p-4 lg:p-8">
-      <div className="w-full lg:w-70 md:w-4/5 text-left bg-yellow-500 p-6">
+      <h1 className="text-3xl lg:text-4xl font-bold my-2">
+        Edit Your Experience
+      </h1>
+      <div className="w-full lg:w-70 md:w-4/5 text-left bg-yellow-500 p-6 mt-2">
         {loading ? (
           <SkeletonBlog />
         ) : (

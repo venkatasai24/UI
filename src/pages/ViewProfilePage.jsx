@@ -1,51 +1,26 @@
 import { useEffect, useState } from "react";
-import useAxiosPrivate from "../hooks/useAxiosprivate";
 import axios from "../api/axios";
 import BlogCard from "../components/BlogCard";
 import { showToast } from "../components/Toast";
-import useAuth from "../hooks/useAuth";
+import { useParams } from "react-router-dom";
 
-const ProfilePage = () => {
-  const axiosPrivate = useAxiosPrivate();
+const ViewProfilePage = () => {
   const [userData, setUserData] = useState(null);
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { auth } = useAuth();
+  const { email } = useParams();
 
   const getUser = async () => {
     let err = null;
     setLoading(true);
     try {
-      const response = await axios.get(`/users/profile/${auth?.email}`);
+      const response = await axios.get(`/users/profile/${email}`);
       setUserData(response.data);
       const blogPromises = response.data.blogs.map((blogId) =>
         axios.get(`/${blogId}`)
       );
       const blogResponses = (await Promise.all(blogPromises)).reverse();
       setBlogs(blogResponses.map((res) => res.data));
-    } catch (error) {
-      if (error?.response?.data?.message) err = error.response.data.message;
-      else err = error.message;
-    } finally {
-      setLoading(false);
-      if (err) {
-        showToast(err, "");
-      }
-    }
-  };
-
-  const handleDelete = async (e, id) => {
-    e.preventDefault();
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this blog? This action cannot be undone."
-    );
-    if (!confirmDelete) return;
-    let err = null;
-    setLoading(true);
-    try {
-      await axiosPrivate.delete(`/${id}`);
-      showToast("", "Blog deleted successfully!!");
-      await getUser(); // Refresh the user data after deleting the blog
     } catch (error) {
       if (error?.response?.data?.message) err = error.response.data.message;
       else err = error.message;
@@ -90,23 +65,14 @@ const ProfilePage = () => {
           )}
         </div>
         <div className="text-white w-full lg:w-2/3">
-          <h2 className="text-3xl lg:text-4xl font-bold m-2">My Blogs</h2>
+          <h2 className="text-3xl lg:text-4xl font-bold m-2">Blogs</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {loading ? (
               <p className="text-blue-500 bg-blue-100 p-2 rounded-md mb-2 text-center">
                 Loading ...
               </p>
-            ) : blogs.length ? (
-              blogs.map((blog) => (
-                <BlogCard
-                  key={blog._id}
-                  blog={blog}
-                  from="Profile"
-                  handleDelete={handleDelete}
-                />
-              ))
             ) : (
-              <p className="p-2">No Blogs to show ... :(</p>
+              blogs.map((blog) => <BlogCard key={blog._id} blog={blog} />)
             )}
           </div>
         </div>
@@ -115,4 +81,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default ViewProfilePage;

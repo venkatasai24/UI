@@ -9,8 +9,10 @@ const NavBar = () => {
   const navigate = useNavigate();
   const { auth } = useAuth();
   const logout = useLogout();
+
   const signOut = async () => {
     await logout();
+    setIsOpen(false); // Close menu after logout
     navigate("/login");
   };
 
@@ -18,12 +20,16 @@ const NavBar = () => {
     setIsOpen(!isOpen);
   };
 
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
+
   return (
     <>
       <nav className="bg-gradient-to-r from-purple-600 to-blue-600 p-4 sticky top-0 z-100 shadow-lg">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between">
-            <Link to="/">
+            <Link to="/" onClick={closeMenu}>
               <Logo />
             </Link>
             <div className="hidden lg:flex space-x-4">
@@ -58,7 +64,6 @@ const NavBar = () => {
                   </Link>
                 </>
               )}
-              {/* Add more anchor tags for other buttons */}
             </div>
             <div className="flex lg:hidden">
               <button
@@ -87,7 +92,6 @@ const NavBar = () => {
               </button>
             </div>
           </div>
-          {/* Toggle menu for smaller screens */}
           <div
             className={`${
               isOpen ? "opacity-100" : "opacity-0"
@@ -99,6 +103,7 @@ const NavBar = () => {
                   <Link
                     to="/profile"
                     className="text-white hover:bg-purple-800 px-4 py-2 rounded-md text-md transition duration-300"
+                    onClick={closeMenu}
                   >
                     Profile
                   </Link>
@@ -114,12 +119,14 @@ const NavBar = () => {
                   <Link
                     to="/register"
                     className="text-white hover:bg-purple-800 px-4 py-2 rounded-md text-md transition duration-300"
+                    onClick={closeMenu}
                   >
                     Register
                   </Link>
                   <Link
                     to="/login"
                     className="text-white hover:bg-purple-800 px-4 py-2 rounded-md text-md transition duration-300"
+                    onClick={closeMenu}
                   >
                     Login
                   </Link>

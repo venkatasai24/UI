@@ -5,17 +5,27 @@ import remarkGfm from "remark-gfm";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
 const BlogCard = ({ blog, from = "", handleDelete }) => {
-  let classes =
-    "bg-yellow-500 text-white p-4 hover:bg-yellow-600 transition duration-300";
+  let classes = "bg-yellow-500 text-white p-4";
   if (from === "readBlogs") classes += " m-2 w-full lg:w-70 md:w-4/5";
 
   return (
     <div className={classes}>
       <Link key={blog._id} to={`/blogs/${blog._id}`} className="block">
-        <h3 className="text-xl font-semibold mb-2">{blog.title}</h3>
+        <h3 className="text-xl font-semibold">{blog.title}</h3>
+        <p className="mb-2 text-sm">
+          by{" "}
+          <Link
+            className="text-green-600 hover:underline"
+            to={`/view-profile/${blog.createdBy}`}
+          >
+            {" "}
+            {blog.createdBy}
+          </Link>{" "}
+          , {new Date(blog.createdAt).toLocaleDateString()}
+        </p>
         <p className="text-lg">
           <ReactMarkdown
-            children={blog.description.slice(0, 95) + " ..."}
+            children={blog.description.slice(0, 100) + " ..."}
             remarkPlugins={[remarkGfm]}
           />
         </p>

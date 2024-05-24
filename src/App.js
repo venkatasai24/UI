@@ -11,6 +11,7 @@ import RequireAuth from "./utils/RequireAuth";
 // import PersistLogin from "./utils/persistLogin";
 import ProfilePage from "./pages/ProfilePage";
 import EditBlogPage from "./pages/EditBlogPage";
+import ViewProfilePage from "./pages/ViewProfilePage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/read-blogs" element={<ReadBlogs />} />
           <Route path="/blogs/:id" element={<BlogPage />} />
+          <Route path="/view-profile/:email" element={<ViewProfilePage />} />
           {/* <Route element={<PersistLogin />}> */}
           <Route element={<RequireAuth />}>
             <Route path="/write-blog" element={<WriteBlog />} />
