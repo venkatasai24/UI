@@ -12,6 +12,9 @@ import RequireAuth from "./utils/RequireAuth";
 import ProfilePage from "./pages/ProfilePage";
 import EditBlogPage from "./pages/EditBlogPage";
 import ViewProfilePage from "./pages/ViewProfilePage";
+import ReadTags from "./pages/ReadTags";
+import ReadCategories from "./pages/ReadCategories";
+import GuideLines from "./pages/GuideLines";
 
 function App() {
   return (
@@ -22,8 +25,11 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/read-blogs" element={<ReadBlogs />} />
+          <Route path="/guidelines" element={<GuideLines />} />
           <Route path="/blogs/:id" element={<BlogPage />} />
           <Route path="/view-profile/:email" element={<ViewProfilePage />} />
+          <Route path="/tags/:tag" element={<ReadTags />} />
+          <Route path="/categories/:category" element={<ReadCategories />} />
           {/* <Route element={<PersistLogin />}> */}
           <Route element={<RequireAuth />}>
             <Route path="/write-blog" element={<WriteBlog />} />

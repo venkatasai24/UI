@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import useAxiosPrivate from "../hooks/useAxiosprivate";
 import axios from "../api/axios";
 import BlogWritingCard from "../components/BlogWritingCard";
@@ -71,6 +71,13 @@ const EditBlogPage = () => {
       <h1 className="text-3xl lg:text-4xl font-bold my-2">
         Edit Your Experience
       </h1>
+      <p className="mb-2">
+        Please read our{" "}
+        <Link className="text-blue-900 hover:underline" to="/guidelines">
+          Guidelines
+        </Link>{" "}
+        page to learn how to re-write your experience concisely!
+      </p>
       <div className="w-full lg:w-70 md:w-4/5 text-left bg-yellow-500 p-6 mt-2">
         {loading ? (
           <SkeletonBlog />

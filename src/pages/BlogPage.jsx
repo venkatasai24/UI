@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import SkeletonBlog from "../components/SkeletonBlog";
 import { showToast } from "../components/Toast";
+import TagAndCategory from "../components/TagAndCategory";
 
 const BlogPage = () => {
   const { id } = useParams();
@@ -63,6 +64,7 @@ const BlogPage = () => {
                     remarkPlugins={[remarkGfm]}
                   />
                 </p>
+                <TagAndCategory blog={blog} />
               </div>
             </>
           )

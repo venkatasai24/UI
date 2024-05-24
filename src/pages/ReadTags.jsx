@@ -3,25 +3,21 @@ import axios from "../api/axios";
 import BlogCard from "../components/BlogCard";
 import SkeletonBlog from "../components/SkeletonBlog";
 import { showToast } from "../components/Toast";
-import CategoriesCard from "../components/CategoriesCard";
+import { useParams } from "react-router-dom";
 
-const ReadBlogs = () => {
+const ReadTags = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [categories, setCategories] = useState([]);
+  const { tag } = useParams();
 
   useEffect(() => {
-    const getBlogs = async () => {
+    const getTagBlogs = async () => {
       let err = null;
       setLoading(true); // Set loading to true before making the request
       try {
-        const response = await axios.get("/");
+        const response = await axios.get(`/tags/${tag}`);
         setBlogs(response.data);
-        // Extract distinct categories from blogs
-        const distinctCategories = [
-          ...new Set(response.data.map((blog) => blog.categories).flat()),
-        ];
-        setCategories(distinctCategories);
+        console.log(response.data);
       } catch (error) {
         if (error?.response?.data?.message) err = error.response.data.message;
         else err = error.message;
@@ -32,30 +28,32 @@ const ReadBlogs = () => {
         }
       }
     };
-    getBlogs();
+    getTagBlogs();
   }, []);
 
   return (
-    <div className="bg-gradient-to-r from-purple-600 to-blue-600 min-h-screen flex flex-row p-4 lg:p-8">
-      <div className="text-white w-full lg:w-70">
-        <h1 className="text-3xl lg:text-4xl font-bold m-2">Read Experiences</h1>
+    <div className="bg-gradient-to-r from-purple-600 to-blue-600 min-h-screen flex flex-col items-start p-4 lg:p-8">
+      <div className="text-white">
+        <h1 className="text-3xl lg:text-4xl m-2">
+          Experiences related to <strong>{tag}</strong>
+        </h1>
         <div className="flex flex-wrap justify-start">
           {loading
             ? Array(5)
                 .fill()
                 .map((_, index) => (
-                  <div key={index} className="bg-yellow-500 p-4 m-2 w-full">
+                  <div
+                    key={index}
+                    className="bg-yellow-500 p-4 m-2 w-full lg:w-70 md:w-4/5"
+                  >
                     <SkeletonBlog from="ReadBlogs" />
                   </div>
                 ))
             : blogs.map((blog) => <BlogCard blog={blog} from="readBlogs" />)}
         </div>
       </div>
-      <div className="hidden lg:block lg:w-30">
-        <CategoriesCard categories={categories} />
-      </div>
     </div>
   );
 };
 
-export default ReadBlogs;
+export default ReadTags;

@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import TagAndCategory from "./TagAndCategory";
 
 const BlogCard = ({ blog, from = "", handleDelete }) => {
   let classes = "bg-yellow-500 text-white p-4";
-  if (from === "readBlogs") classes += " m-2 w-full lg:w-70 md:w-4/5";
+  if (from === "readBlogs") classes += " m-2 w-full";
 
   return (
     <div className={classes}>
@@ -18,9 +19,8 @@ const BlogCard = ({ blog, from = "", handleDelete }) => {
             className="text-green-600 hover:underline"
             to={`/view-profile/${blog.createdBy}`}
           >
-            {" "}
             {blog.createdBy}
-          </Link>{" "}
+          </Link>
           , {new Date(blog.createdAt).toLocaleDateString()}
         </p>
         <p className="text-lg">
@@ -29,20 +29,15 @@ const BlogCard = ({ blog, from = "", handleDelete }) => {
             remarkPlugins={[remarkGfm]}
           />
         </p>
+        <TagAndCategory blog={blog} />
       </Link>
       {from === "Profile" && (
         <div className="flex justify-end space-x-4 mt-4">
-          <Link
-            to={`/blogs/${blog._id}/edit`}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 focus:outline-none focus:shadow-outline"
-          >
-            <FaEdit />
+          <Link to={`/blogs/${blog._id}/edit`}>
+            <FaEdit className="text-blue-500 hover:text-blue-700" />
           </Link>
-          <button
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 focus:outline-none focus:shadow-outline"
-            onClick={(e) => handleDelete(e, blog._id)}
-          >
-            <FaTrashAlt />
+          <button onClick={(e) => handleDelete(e, blog._id)}>
+            <FaTrashAlt className="text-red-500 hover:text-red-700" />
           </button>
         </div>
       )}
