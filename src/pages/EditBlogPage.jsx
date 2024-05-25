@@ -9,7 +9,12 @@ import { showToast } from "../components/Toast";
 const EditBlogPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [blog, setBlog] = useState({ title: "", description: "" });
+  const [blog, setBlog] = useState({
+    title: "",
+    description: "",
+    categories: "",
+    tags: "",
+  });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [preview, setPreview] = useState(false);
@@ -21,7 +26,12 @@ const EditBlogPage = () => {
       setLoading(true);
       try {
         const response = await axios.get(`/${id}`);
-        setBlog(response.data);
+        setBlog({
+          title: response.data.title,
+          description: response.data.description,
+          tags: response.data.tags.join(","),
+          categories: response.data.categories.join(","),
+        });
       } catch (error) {
         if (error?.response?.data?.message) err = error.response.data.message;
         else err = error.message;
@@ -43,10 +53,29 @@ const EditBlogPage = () => {
 
   const handleSubmitForm = async (e) => {
     e.preventDefault();
+    let categories =
+      blog.categories.length > 0
+        ? blog.categories
+            .split(",")
+            .map((category) => category.trim())
+            .filter((category) => category.length > 0)
+        : [];
+    let tags =
+      blog.tags.length > 0
+        ? blog.tags
+            .split(",")
+            .map((tag) => tag.trim())
+            .filter((tag) => tag.length > 0)
+        : [];
+    const Blog = {
+      ...blog,
+      categories,
+      tags,
+    };
     let err = null;
     setSaving(true);
     try {
-      await axiosPrivate.put(`/${id}`, blog);
+      await axiosPrivate.put(`/${id}`, Blog);
       showToast("", "Blog updated successfully!!");
       setTimeout(() => {
         navigate(`/blogs/${id}`);

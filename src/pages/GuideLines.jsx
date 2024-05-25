@@ -157,6 +157,29 @@ const GuideLines = () => {
         <i>(Add more rounds as necessary)</i>
       </p>
 
+      <h3 className="text-lg lg:text-xl font-bold my-2">Categories and Tags</h3>
+      <p className="text-lg lg:text-xl my-2">
+        Categories and tags are used to classify your submission and make it
+        easier for others to find relevant information. When adding tags and
+        categories to your submission, please follow these guidelines:
+      </p>
+      <ul className="list-disc list-inside my-2">
+        <li>Ensure strict comma separation between each category and tag.</li>
+        <li>
+          Extra spaces before or after categories and tags are not mandatory, as
+          they will be trimmed automatically.
+        </li>
+        <li>
+          Example : <code>category1,category2,category3</code> or{" "}
+          <code>tag1,tag2,tag3</code>
+        </li>
+        <li>
+          Use categories to group your submission into broader sections, such as
+          "Technical Interviews" or "HR Interviews".
+        </li>
+        <li>Use tags to describe key topics and themes of your submission.</li>
+      </ul>
+
       <h3 className="text-lg lg:text-xl font-bold my-2">Tips and Tricks</h3>
       <p className="text-lg lg:text-xl my-2">
         Share any tips and tricks that helped you during the preparation and the

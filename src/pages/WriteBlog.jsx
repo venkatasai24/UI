@@ -5,7 +5,12 @@ import BlogWritingCard from "../components/BlogWritingCard";
 import { showToast } from "../components/Toast";
 
 const WriteBlog = () => {
-  const [blog, setBlog] = useState({ title: "", description: "" });
+  const [blog, setBlog] = useState({
+    title: "",
+    description: "",
+    categories: "",
+    tags: "",
+  });
   const [preview, setPreview] = useState(false);
   const [loading, setLoading] = useState(false);
   const axiosPrivate = useAxiosPrivate();
@@ -22,10 +27,29 @@ const WriteBlog = () => {
 
   const handleSubmitForm = async (e) => {
     e.preventDefault();
+    let categories =
+      blog.categories.length > 0
+        ? blog.categories
+            .split(",")
+            .map((category) => category.trim())
+            .filter((category) => category.length > 0)
+        : [];
+    let tags =
+      blog.tags.length > 0
+        ? blog.tags
+            .split(",")
+            .map((tag) => tag.trim())
+            .filter((tag) => tag.length > 0)
+        : [];
+    const Blog = {
+      ...blog,
+      categories,
+      tags,
+    };
     let err = null;
     setLoading(true);
     try {
-      await axiosPrivate.post("/", blog);
+      await axiosPrivate.post("/", Blog);
       showToast("", "Blog created successfully!!");
       setTimeout(() => {
         navigate("/read-blogs");

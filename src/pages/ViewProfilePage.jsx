@@ -3,6 +3,7 @@ import axios from "../api/axios";
 import BlogCard from "../components/BlogCard";
 import { showToast } from "../components/Toast";
 import { useParams } from "react-router-dom";
+import ProfileCard from "../components/ProfileCard";
 
 const ViewProfilePage = () => {
   const [userData, setUserData] = useState(null);
@@ -42,18 +43,7 @@ const ViewProfilePage = () => {
         <div className="text-white w-full lg:w-1/3">
           <h1 className="text-3xl lg:text-4xl font-bold m-2">Profile</h1>
           {userData ? (
-            <div className="bg-green-500 text-white shadow-md p-4 m-2 overflow-auto">
-              <p className="text-xl mb-2">
-                <strong>Name :</strong> {userData.name}
-              </p>
-              <p className="text-xl mb-2">
-                <strong>Email :</strong> {userData.email}
-              </p>
-              <p className="text-xl mb-4">
-                <strong>Account Created :</strong>{" "}
-                {new Date(userData.createdAt).toLocaleDateString()}
-              </p>
-            </div>
+            <ProfileCard userData={userData} />
           ) : (
             <>
               {loading && (

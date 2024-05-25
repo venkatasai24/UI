@@ -26,7 +26,34 @@ const BlogWritingCard = ({
           onChange={handleInputChange}
         />
       </div>
-
+      <div className="mb-4">
+        <label className="block text-sm font-bold mb-2" htmlFor="categories">
+          Categories
+        </label>
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+          id="categories"
+          type="text"
+          name="categories" // Added name attribute
+          placeholder="Enter categories (comma separated)"
+          value={blog.categories}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div className="mb-4">
+        <label className="block text-sm font-bold mb-2" htmlFor="tags">
+          Tags
+        </label>
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+          id="tags"
+          type="text"
+          name="tags" // Added name attribute
+          placeholder="Enter tags (comma separated)"
+          value={blog.tags}
+          onChange={handleInputChange}
+        />
+      </div>
       <div className="mb-4">
         <label className="block text-sm font-bold mb-2" htmlFor="description">
           Description (Markdown content)
