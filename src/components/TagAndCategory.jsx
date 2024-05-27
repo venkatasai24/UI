@@ -12,7 +12,7 @@ const TagAndCategory = ({ blog }) => {
             {blog.categories.map((category, index) => (
               <Link
                 to={`/categories/${category}`}
-                className="text-indigo hover:underline mr-2 text-sm"
+                className="text-indigo hover:underline mr-1 text-sm"
               >
                 {category}
                 {index !== blog.categories.length - 1 && ","}
@@ -28,7 +28,7 @@ const TagAndCategory = ({ blog }) => {
             {blog.tags.map((tag, index) => (
               <Link
                 to={`/tags/${tag}`}
-                className="text-indigo hover:underline mr-2 text-sm"
+                className="text-indigo hover:underline mr-1 text-sm"
               >
                 {tag}
                 {index !== blog.tags.length - 1 && ","}
