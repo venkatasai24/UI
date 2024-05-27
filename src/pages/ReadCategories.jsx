@@ -29,7 +29,7 @@ const ReadCategories = () => {
       }
     };
     getTagBlogs();
-  }, []);
+  }, [category]);
 
   return (
     <div className="bg-gradient-to-r from-purple-600 to-blue-600 min-h-screen flex flex-col items-start p-4 lg:p-8">
