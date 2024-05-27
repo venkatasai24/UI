@@ -1,6 +1,6 @@
 const ProfileCard = ({ userData }) => {
   return (
-    <div className="bg-green-500 text-white shadow-md p-4 m-2 overflow-auto">
+    <div className="bg-white bg-opacity-30 rounded-lg shadow-lg text-white shadow-md p-4 m-2 overflow-auto">
       <p className="text-xl mb-2">
         <strong>Name :</strong> {userData.name}
       </p>

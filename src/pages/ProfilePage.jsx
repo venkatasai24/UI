@@ -5,6 +5,7 @@ import BlogCard from "../components/BlogCard";
 import { showToast } from "../components/Toast";
 import useAuth from "../hooks/useAuth";
 import ProfileCard from "../components/ProfileCard";
+import SkeletonBlog from "../components/SkeletonBlog";
 
 const ProfilePage = () => {
   const axiosPrivate = useAxiosPrivate();
@@ -35,7 +36,7 @@ const ProfilePage = () => {
     }
   };
 
-  const handleDelete = async (e, id) => {
+  const handleDelete = async (e, id, email) => {
     e.preventDefault();
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this blog? This action cannot be undone."
@@ -44,7 +45,7 @@ const ProfilePage = () => {
     let err = null;
     setLoading(true);
     try {
-      await axiosPrivate.delete(`/${id}`);
+      await axiosPrivate.delete(`/${id}`, { data: { email } });
       showToast("", "Blog deleted successfully!!");
       await getUser(); // Refresh the user data after deleting the blog
     } catch (error) {
@@ -71,11 +72,17 @@ const ProfilePage = () => {
             <ProfileCard userData={userData} />
           ) : (
             <>
-              {loading && (
-                <p className="text-blue-500 bg-blue-100 p-2 rounded-md mb-2 text-center">
-                  Loading ...
-                </p>
-              )}
+              {loading &&
+                Array(1)
+                  .fill()
+                  .map((_, index) => (
+                    <div
+                      key={index}
+                      className="bg-white bg-opacity-30 p-4 rounded-lg shadow-lg m-2 w-full"
+                    >
+                      <SkeletonBlog from="profile" />
+                    </div>
+                  ))}
             </>
           )}
         </div>
@@ -83,9 +90,16 @@ const ProfilePage = () => {
           <h2 className="text-3xl lg:text-4xl font-bold m-2">My Blogs</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {loading ? (
-              <p className="text-blue-500 bg-blue-100 p-2 rounded-md mb-2 text-center">
-                Loading ...
-              </p>
+              Array(3)
+                .fill()
+                .map((_, index) => (
+                  <div
+                    key={index}
+                    className="bg-white bg-opacity-30 p-4 rounded-lg shadow-lg m-2 w-full"
+                  >
+                    <SkeletonBlog from="ReadBlogs" />
+                  </div>
+                ))
             ) : blogs.length ? (
               blogs.map((blog) => (
                 <BlogCard

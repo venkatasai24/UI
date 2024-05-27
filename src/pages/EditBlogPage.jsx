@@ -29,11 +29,11 @@ const EditBlogPage = () => {
         "You can't edit this blog. Please access the profile page first.",
         ""
       );
+      // Delay navigation to ensure toast is displayed
+      setTimeout(() => {
+        navigate("/profile");
+      }, 2000); // Adjust the delay as needed
     }
-    // Delay navigation to ensure toast is displayed
-    setTimeout(() => {
-      navigate("/profile");
-    }, 2000); // Adjust the delay as needed
   }, []);
 
   useEffect(() => {
@@ -124,7 +124,7 @@ const EditBlogPage = () => {
         </Link>{" "}
         page to learn how to re-write your experience concisely!
       </p>
-      <div className="w-full lg:w-70 md:w-4/5 text-left bg-yellow-500 p-6 mt-2">
+      <div className="w-full lg:w-70 md:w-4/5 text-left bg-white bg-opacity-30 rounded-lg shadow-lg p-6 mt-2">
         {loading ? (
           <SkeletonBlog />
         ) : (

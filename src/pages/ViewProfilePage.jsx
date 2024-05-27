@@ -4,6 +4,7 @@ import BlogCard from "../components/BlogCard";
 import { showToast } from "../components/Toast";
 import { useParams } from "react-router-dom";
 import ProfileCard from "../components/ProfileCard";
+import SkeletonBlog from "../components/SkeletonBlog";
 
 const ViewProfilePage = () => {
   const [userData, setUserData] = useState(null);
@@ -46,24 +47,35 @@ const ViewProfilePage = () => {
             <ProfileCard userData={userData} />
           ) : (
             <>
-              {loading && (
-                <p className="text-blue-500 bg-blue-100 p-2 rounded-md mb-2 text-center">
-                  Loading ...
-                </p>
-              )}
+              {loading &&
+                Array(1)
+                  .fill()
+                  .map((_, index) => (
+                    <div
+                      key={index}
+                      className="bg-white bg-opacity-30 p-4 rounded-lg shadow-lg m-2 w-full"
+                    >
+                      <SkeletonBlog from="profile" />
+                    </div>
+                  ))}
             </>
           )}
         </div>
         <div className="text-white w-full lg:w-2/3">
           <h2 className="text-3xl lg:text-4xl font-bold m-2">Blogs</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {loading ? (
-              <p className="text-blue-500 bg-blue-100 p-2 rounded-md mb-2 text-center">
-                Loading ...
-              </p>
-            ) : (
-              blogs.map((blog) => <BlogCard key={blog._id} blog={blog} />)
-            )}
+            {loading
+              ? Array(3)
+                  .fill()
+                  .map((_, index) => (
+                    <div
+                      key={index}
+                      className="bg-white bg-opacity-30 p-4 rounded-lg shadow-lg m-2 w-full"
+                    >
+                      <SkeletonBlog from="ReadBlogs" />
+                    </div>
+                  ))
+              : blogs.map((blog) => <BlogCard key={blog._id} blog={blog} />)}
           </div>
         </div>
       </div>

@@ -3,6 +3,10 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      colors: {
+        indigo: "#4B0082",
+        teal: "#008080",
+      },
       fontFamily: {
         sans: ["Nunito Sans", "sans-serif"],
       },

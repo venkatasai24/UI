@@ -75,7 +75,7 @@ const WriteBlog = () => {
         </Link>{" "}
         page to learn how to write your experience concisely!
       </p>
-      <div className="w-full lg:w-70 md:w-4/5 text-left bg-green-500 p-6 mt-2">
+      <div className="w-full lg:w-70 md:w-4/5 text-left bg-white bg-opacity-30 rounded-lg shadow-lg p-6 mt-2">
         {loading && (
           <p className="text-blue-500 bg-blue-100 p-2 rounded-md mb-2 text-center">
             Writing ...

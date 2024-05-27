@@ -44,7 +44,10 @@ const ReadBlogs = () => {
             ? Array(5)
                 .fill()
                 .map((_, index) => (
-                  <div key={index} className="bg-yellow-500 p-4 m-2 w-full">
+                  <div
+                    key={index}
+                    className="bg-white bg-opacity-30 p-4 rounded-lg shadow-lg m-2 w-full"
+                  >
                     <SkeletonBlog from="ReadBlogs" />
                   </div>
                 ))

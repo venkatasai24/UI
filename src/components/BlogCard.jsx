@@ -7,7 +7,7 @@ import TagAndCategory from "./TagAndCategory";
 
 const BlogCard = ({ blog, from = "", handleDelete }) => {
   const location = useLocation();
-  let classes = "bg-yellow-500 text-white p-4";
+  let classes = "bg-white bg-opacity-30 p-4 rounded-lg shadow-lg";
   if (from === "readBlogs") classes += " m-2 w-full";
 
   return (
@@ -17,7 +17,7 @@ const BlogCard = ({ blog, from = "", handleDelete }) => {
         <p className="mb-2 text-sm">
           by{" "}
           <Link
-            className="text-green-600 hover:underline"
+            className="text-red-600 hover:underline"
             to={`/view-profile/${blog.createdBy}`}
           >
             {blog.createdBy}
@@ -35,10 +35,10 @@ const BlogCard = ({ blog, from = "", handleDelete }) => {
       {from === "Profile" && (
         <div className="flex justify-end space-x-4 mt-4">
           <Link state={{ from: location }} to={`/blogs/${blog._id}/edit`}>
-            <FaEdit className="text-blue-500 hover:text-blue-700" />
+            <FaEdit className="text-blue-700 hover:text-blue-800" />
           </Link>
           <button onClick={(e) => handleDelete(e, blog._id)}>
-            <FaTrashAlt className="text-red-500 hover:text-red-700" />
+            <FaTrashAlt className="text-red-600 hover:text-red-700" />
           </button>
         </div>
       )}

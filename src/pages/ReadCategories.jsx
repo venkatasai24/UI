@@ -44,7 +44,7 @@ const ReadCategories = () => {
                 .map((_, index) => (
                   <div
                     key={index}
-                    className="bg-yellow-500 p-4 m-2 w-full lg:w-70 md:w-4/5"
+                    className="bg-white bg-opacity-30 rounded-lg shadow-lg p-4 m-2 w-full lg:w-70 md:w-4/5"
                   >
                     <SkeletonBlog from="ReadBlogs" />
                   </div>
