@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
 import useAxiosPrivate from "../hooks/useAxiosprivate";
 import axios from "../api/axios";
 import BlogWritingCard from "../components/BlogWritingCard";
@@ -9,16 +9,32 @@ import { showToast } from "../components/Toast";
 const EditBlogPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname;
   const [blog, setBlog] = useState({
     title: "",
     description: "",
     categories: "",
     tags: "",
+    email: "",
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [preview, setPreview] = useState(false);
   const axiosPrivate = useAxiosPrivate();
+
+  useEffect(() => {
+    if (!from || from !== "/profile") {
+      showToast(
+        "You can't edit this blog. Please access the profile page first.",
+        ""
+      );
+    }
+    // Delay navigation to ensure toast is displayed
+    setTimeout(() => {
+      navigate("/profile");
+    }, 2000); // Adjust the delay as needed
+  }, []);
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -31,6 +47,7 @@ const EditBlogPage = () => {
           description: response.data.description,
           tags: response.data.tags.join(","),
           categories: response.data.categories.join(","),
+          email: response.data.createdBy,
         });
       } catch (error) {
         if (error?.response?.data?.message) err = error.response.data.message;

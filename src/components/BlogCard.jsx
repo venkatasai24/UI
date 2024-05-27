@@ -1,11 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import TagAndCategory from "./TagAndCategory";
 
 const BlogCard = ({ blog, from = "", handleDelete }) => {
+  const location = useLocation();
   let classes = "bg-yellow-500 text-white p-4";
   if (from === "readBlogs") classes += " m-2 w-full";
 
@@ -33,7 +34,7 @@ const BlogCard = ({ blog, from = "", handleDelete }) => {
       </Link>
       {from === "Profile" && (
         <div className="flex justify-end space-x-4 mt-4">
-          <Link to={`/blogs/${blog._id}/edit`}>
+          <Link state={{ from: location }} to={`/blogs/${blog._id}/edit`}>
             <FaEdit className="text-blue-500 hover:text-blue-700" />
           </Link>
           <button onClick={(e) => handleDelete(e, blog._id)}>
