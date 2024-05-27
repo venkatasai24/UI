@@ -4,6 +4,11 @@ import axios from "../api/axios";
 import AuthForm from "../components/AuthForm";
 import { showToast } from "../components/Toast";
 
+const validatePassword = (password) => {
+  const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^\w\s]).{8,}$/;
+  return regex.test(password);
+};
+
 const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
@@ -20,11 +25,6 @@ const RegisterPage = () => {
 
   const togglePasswordVisibility1 = () => {
     setShowPassword1(!showPassword1);
-  };
-
-  const validatePassword = (password) => {
-    const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^\w\s]).{8,}$/;
-    return regex.test(password);
   };
 
   const handleSubmit = async (e) => {
@@ -93,3 +93,4 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
+export { validatePassword };

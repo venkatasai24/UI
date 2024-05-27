@@ -4,6 +4,7 @@ import useAuth from "../hooks/useAuth";
 import axios from "../api/axios";
 import AuthForm from "../components/AuthForm";
 import { showToast } from "../components/Toast";
+import { validatePassword } from "./RegisterPage";
 
 const LoginPage = () => {
   const { setAuth } = useAuth();
@@ -11,6 +12,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [forgot, setForgot] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -19,27 +21,52 @@ const LoginPage = () => {
     setShowPassword(!showPassword);
   };
 
+  const toggleForgot = () => {
+    setForgot(!forgot);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     let err = null;
     setLoading(true);
+    // Password Validation
+    // if (forgot && !validatePassword(password)) {
+    //   setLoading(false);
+    //   err =
+    //     "Password must be at least 8 characters long and contain a lowercase letter, uppercase letter, number, and symbol.";
+    //   showToast(err, "");
+    //   return;
+    // }
     try {
-      const response = await axios.post(
-        "/users/login",
-        { email, password },
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
+      const response = !forgot
+        ? await axios.post(
+            "/users/login",
+            { email, password },
+            {
+              headers: { "Content-Type": "application/json" },
+              withCredentials: true,
+            }
+          )
+        : await axios.put(
+            "/users/update-password",
+            { email, password },
+            {
+              headers: { "Content-Type": "application/json" },
+              withCredentials: true,
+            }
+          );
       setLoading(false);
-      const accessToken = response?.data?.accessToken;
-      setAuth({ email, accessToken });
-      showToast("", `Hi ${email}!`);
-      // Delay navigation to ensure toast is displayed
-      setTimeout(() => {
-        navigate(from, { replace: true });
-      }, 2000); // Adjust the delay as needed
+      if (!forgot) {
+        const accessToken = response?.data?.accessToken;
+        setAuth({ email, accessToken });
+        showToast("", `Hi ${email}!`);
+        // Delay navigation to ensure toast is displayed
+        setTimeout(() => {
+          navigate(from, { replace: true });
+        }, 2000); // Adjust the delay as needed
+      } else {
+        showToast("", `Your ${response.data.message}!`);
+      }
     } catch (error) {
       if (error?.response?.data?.message) err = error.response.data.message;
       else err = error.message;
@@ -61,6 +88,8 @@ const LoginPage = () => {
       setPassword={setPassword}
       showPassword={showPassword}
       togglePasswordVisibility={togglePasswordVisibility}
+      forgot={forgot}
+      toggleForgot={toggleForgot}
     />
   );
 };
