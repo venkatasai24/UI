@@ -33,7 +33,7 @@ const ReadCategories = () => {
 
   return (
     <div className="bg-gradient-to-r from-purple-600 to-blue-600 min-h-screen flex flex-col items-start p-4 lg:p-8">
-      <div className="text-white">
+      <div className="text-white w-full lg:w-70">
         <h1 className="text-3xl lg:text-4xl m-2">
           Experiences related to <strong>{category}</strong>
         </h1>
@@ -44,7 +44,7 @@ const ReadCategories = () => {
                 .map((_, index) => (
                   <div
                     key={index}
-                    className="bg-white bg-opacity-30 rounded-lg shadow-lg p-4 m-2 w-full lg:w-70 md:w-4/5"
+                    className="bg-white bg-opacity-30 rounded-lg shadow-lg p-4 m-2 w-full"
                   >
                     <SkeletonBlog from="ReadBlogs" />
                   </div>
