@@ -14,7 +14,7 @@ import EditBlogPage from "./pages/EditBlogPage";
 import ViewProfilePage from "./pages/ViewProfilePage";
 import ReadTags from "./pages/ReadTags";
 import ReadCategories from "./pages/ReadCategories";
-import GuideLines from "./pages/GuideLines";
+import GuideLines from "./components/GuideLines";
 import About from "./components/About";
 
 function App() {

@@ -28,7 +28,7 @@ const BlogPage = () => {
         const [blogResponse, bookmarksResponse] = await Promise.all([
           axios.get(`/${id}`),
           auth?.email
-            ? axiosPrivate.get("/users/bookMarks")
+            ? axiosPrivate.get("/users/bookmarks")
             : Promise.resolve({ data: [] }),
         ]);
         setBlog(blogResponse.data);

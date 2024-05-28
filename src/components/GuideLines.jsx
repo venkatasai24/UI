@@ -172,10 +172,66 @@ const GuideLines = () => {
           <code>tag1,tag2,tag3</code>
         </li>
         <li>
-          Use categories to group your submission into broader sections, such as
-          "Technical Interviews" or "HR Interviews".
+          Categories help in organizing content into primary segments:
+          <ul className="list-disc list-inside ml-4">
+            <li>
+              <b>Technical Interviews</b> : Select this category if your
+              submission focuses on technical aspects of interviews such as
+              coding challenges, algorithm problems, and technical questions.
+            </li>
+            <li>
+              <b>HR Interviews</b> : Use this category if your submission is
+              about HR or behavioral interviews, including common questions,
+              situational scenarios, and soft skill assessments.
+            </li>
+            <li>
+              <b>Internship Interviews</b> : Choose this category if you are
+              sharing experiences related to internship interviews, including
+              specific tasks or questions interns may face.
+            </li>
+            <li>
+              <b>Placement Interviews</b> : Opt for this category if your
+              submission pertains to campus placement interviews, covering both
+              technical and HR rounds specific to college recruitment.
+            </li>
+            <li>
+              <b>Company Reviews</b> : Use this category to review a company’s
+              overall interview process, discussing different stages, company
+              culture, and tips for potential candidates.
+            </li>
+          </ul>
         </li>
-        <li>Use tags to describe key topics and themes of your submission.</li>
+        <li>
+          Tags help in pinpointing specific details and topics within a broader
+          category:
+          <ul className="list-disc list-inside ml-4">
+            <li>
+              <b>Company Names</b> : Tag your submission with specific company
+              names like Google, Microsoft, Amazon, etc. This helps other users
+              find all posts related to a particular company.
+            </li>
+            <li>
+              <b>Job Roles</b> : Use tags to specify the job roles discussed in
+              your submission, such as Software Engineer, Data Scientist,
+              Product Manager, etc.
+            </li>
+            <li>
+              <b>Skills</b> : Include tags for specific skills and topics like
+              Python, Machine Learning, System Design, etc. This allows users to
+              search for posts that match the skills they are preparing for.
+            </li>
+            <li>
+              <b>Colleges</b> : Tag your submission with the names of colleges
+              like MIT, Stanford, IIT, etc. This helps users find experiences
+              shared by students from specific institutions.
+            </li>
+            <li>
+              <b>Interview Types</b> : Add tags for different types of
+              interviews such as Phone Interview, On-site Interview, Online
+              Assessment, etc.
+            </li>
+          </ul>
+        </li>
       </ul>
 
       <h3 className="text-lg lg:text-xl font-bold my-2">Tips and Tricks</h3>

@@ -34,6 +34,18 @@ const NavBar = () => {
             </Link>
             <div className="hidden lg:flex space-x-4">
               <Link
+                to="/read-blogs"
+                className="text-white hover:bg-blue-800 px-3 py-2 rounded-md text-md transition duration-300"
+              >
+                Read
+              </Link>
+              <Link
+                to="/write-blog"
+                className="text-white hover:bg-blue-800 px-3 py-2 rounded-md text-md transition duration-300"
+              >
+                Write
+              </Link>
+              <Link
                 to="/about"
                 className="text-white hover:bg-blue-800 px-3 py-2 rounded-md text-md transition duration-300"
               >
@@ -101,6 +113,20 @@ const NavBar = () => {
           {isOpen && (
             <div className="absolute top-14 left-0 w-full lg:hidden p-2 transition-all duration-300 transform bg-gradient-to-r from-purple-600 to-blue-600 z-10 shadow-lg">
               <div className="flex flex-col items-start">
+                <Link
+                  to="/read-blogs"
+                  className="text-white hover:bg-purple-800 px-4 py-2 rounded-md text-md transition duration-300"
+                  onClick={closeMenu}
+                >
+                  Read
+                </Link>
+                <Link
+                  to="/write-blog"
+                  className="text-white hover:bg-purple-800 px-4 py-2 rounded-md text-md transition duration-300"
+                  onClick={closeMenu}
+                >
+                  Write
+                </Link>
                 <Link
                   to="/about"
                   className="text-white hover:bg-purple-800 px-4 py-2 rounded-md text-md transition duration-300"

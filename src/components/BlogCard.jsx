@@ -37,7 +37,7 @@ const BlogCard = ({ blog, from = "", handleDelete }) => {
           <Link state={{ from: location }} to={`/blogs/${blog._id}/edit`}>
             <FaEdit className="text-blue-700 hover:text-blue-800" />
           </Link>
-          <button onClick={(e) => handleDelete(e, blog._id)}>
+          <button onClick={(e) => handleDelete(e, blog._id, blog.createdBy)}>
             <FaTrashAlt className="text-red-600 hover:text-red-700" />
           </button>
         </div>

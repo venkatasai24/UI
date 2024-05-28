@@ -129,8 +129,8 @@ const ReadBlogs = () => {
           </div>
         </div>
         <div className="hidden lg:block lg:w-30">
-          <Card categories={categories} />
           <Card categories={tags} tags={true} />
+          <Card categories={categories} />
         </div>
       </div>
     </div>

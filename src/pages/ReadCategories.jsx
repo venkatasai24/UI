@@ -17,7 +17,6 @@ const ReadCategories = () => {
       try {
         const response = await axios.get(`/categories/${category}`);
         setBlogs(response.data);
-        console.log(response.data);
       } catch (error) {
         if (error?.response?.data?.message) err = error.response.data.message;
         else err = error.message;

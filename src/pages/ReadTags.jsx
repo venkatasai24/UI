@@ -17,7 +17,6 @@ const ReadTags = () => {
       try {
         const response = await axios.get(`/tags/${tag}`);
         setBlogs(response.data);
-        console.log(response.data);
       } catch (error) {
         if (error?.response?.data?.message) err = error.response.data.message;
         else err = error.message;

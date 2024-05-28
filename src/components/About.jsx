@@ -28,6 +28,14 @@ const About = () => {
         </li>
         <li>Utilize the search bar to find specific topics or companies.</li>
         <li>Bookmark your favorite experiences for quick access later.</li>
+        <li>
+          Read blogs related to particular categories or tags by selecting those
+          tags or categories.
+        </li>
+        <li>
+          Click on the author's email in a blog to view their profile and
+          explore all blogs written by them.
+        </li>
       </ul>
 
       <h3 className="text-lg lg:text-xl font-bold my-2">User Accounts</h3>
