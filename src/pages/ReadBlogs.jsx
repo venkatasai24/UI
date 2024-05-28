@@ -5,6 +5,8 @@ import SkeletonBlog from "../components/SkeletonBlog";
 import { showToast } from "../components/Toast";
 import Card from "../components/Card";
 import { FaSearch } from "react-icons/fa";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 const ReadBlogs = () => {
   const [blogs, setBlogs] = useState([]);
@@ -25,7 +27,8 @@ const ReadBlogs = () => {
       return;
     }
     try {
-      const response = await axios.get(`/search/${query}`);
+      // URL-encode the query to safely transmit special characters
+      const response = await axios.get(`/search/${encodeURIComponent(query)}`);
       setBlogs(response.data);
     } catch (error) {
       if (error?.response?.data?.message) err = error.response.data.message;
@@ -76,6 +79,7 @@ const ReadBlogs = () => {
           className="flex items-center mb-4 w-full lg:w-1/2 md:w-3/5"
         >
           <input
+            data-tooltip-id="search"
             type="text"
             placeholder="Search blogs..."
             value={searchQuery}
@@ -85,11 +89,23 @@ const ReadBlogs = () => {
           />
           <button
             type="submit"
-            className="bg-purple-500 text-white flex justify-center items-center p-2 rounded-r-md hover:bg-purple-600"
+            className="bg-purple-600 text-white flex justify-center items-center p-2 rounded-r-md hover:bg-purple-700"
             style={{ height: "2.5rem" }} // Set the height of the button
           >
             <FaSearch />
           </button>
+          <ReactTooltip
+            id="search"
+            place="bottom"
+            variant="info"
+            content="Search any keyword present in title, tags, or categories"
+            style={{
+              backgroundColor: "teal",
+              borderRadius: "50px",
+              maxWidth: "80%", // Set the default maximum width to 80% of the container
+              wordWrap: "break-word", // Enable word wrapping
+            }}
+          />
         </form>
       </div>
       <div className="flex flex-row p-4 lg:p-8">

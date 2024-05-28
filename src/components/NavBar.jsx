@@ -33,6 +33,12 @@ const NavBar = () => {
               <Logo />
             </Link>
             <div className="hidden lg:flex space-x-4">
+              <Link
+                to="/about"
+                className="text-white hover:bg-blue-800 px-3 py-2 rounded-md text-md transition duration-300"
+              >
+                About
+              </Link>
               {auth?.email ? (
                 <>
                   <Link
@@ -92,48 +98,53 @@ const NavBar = () => {
               </button>
             </div>
           </div>
-          <div
-            className={`${
-              isOpen ? "opacity-100" : "opacity-0"
-            } absolute top-14 left-0 w-full lg:hidden p-2 transition-all duration-300 transform bg-gradient-to-r from-purple-600 to-blue-600 z-10 shadow-lg`}
-          >
-            <div className="flex flex-col items-start">
-              {auth?.email ? (
-                <>
-                  <Link
-                    to="/profile"
-                    className="text-white hover:bg-purple-800 px-4 py-2 rounded-md text-md transition duration-300"
-                    onClick={closeMenu}
-                  >
-                    Profile
-                  </Link>
-                  <button
-                    className="text-white hover:bg-purple-800 px-4 py-2 rounded-md text-md transition duration-300"
-                    onClick={signOut}
-                  >
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link
-                    to="/register"
-                    className="text-white hover:bg-purple-800 px-4 py-2 rounded-md text-md transition duration-300"
-                    onClick={closeMenu}
-                  >
-                    Register
-                  </Link>
-                  <Link
-                    to="/login"
-                    className="text-white hover:bg-purple-800 px-4 py-2 rounded-md text-md transition duration-300"
-                    onClick={closeMenu}
-                  >
-                    Login
-                  </Link>
-                </>
-              )}
+          {isOpen && (
+            <div className="absolute top-14 left-0 w-full lg:hidden p-2 transition-all duration-300 transform bg-gradient-to-r from-purple-600 to-blue-600 z-10 shadow-lg">
+              <div className="flex flex-col items-start">
+                <Link
+                  to="/about"
+                  className="text-white hover:bg-purple-800 px-4 py-2 rounded-md text-md transition duration-300"
+                  onClick={closeMenu}
+                >
+                  About
+                </Link>
+                {auth?.email ? (
+                  <>
+                    <Link
+                      to="/profile"
+                      className="text-white hover:bg-purple-800 px-4 py-2 rounded-md text-md transition duration-300"
+                      onClick={closeMenu}
+                    >
+                      Profile
+                    </Link>
+                    <button
+                      className="text-white hover:bg-purple-800 px-4 py-2 rounded-md text-md transition duration-300"
+                      onClick={signOut}
+                    >
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      to="/register"
+                      className="text-white hover:bg-purple-800 px-4 py-2 rounded-md text-md transition duration-300"
+                      onClick={closeMenu}
+                    >
+                      Register
+                    </Link>
+                    <Link
+                      to="/login"
+                      className="text-white hover:bg-purple-800 px-4 py-2 rounded-md text-md transition duration-300"
+                      onClick={closeMenu}
+                    >
+                      Login
+                    </Link>
+                  </>
+                )}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </nav>
     </>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import useAxiosPrivate from "../hooks/useAxiosprivate";
 import axios from "../api/axios";
 import BlogCard from "../components/BlogCard";
@@ -11,20 +11,32 @@ const ProfilePage = () => {
   const axiosPrivate = useAxiosPrivate();
   const [userData, setUserData] = useState(null);
   const [blogs, setBlogs] = useState([]);
+  const [bookmarkedBlogs, setBookmarkedBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showBookmarkedBlogs, setShowBookmarkedBlogs] = useState(false); // State to toggle display of bookmarked blogs
   const { auth } = useAuth();
 
-  const getUser = async () => {
+  const getUserData = async () => {
     let err = null;
     setLoading(true);
     try {
-      const response = await axios.get(`/users/profile/${auth?.email}`);
-      setUserData(response.data);
-      const blogPromises = response.data.blogs.map((blogId) =>
-        axios.get(`/${blogId}`)
-      );
+      const [userResponse, bookmarksResponse] = await Promise.all([
+        axios.get(`/users/profile/${auth?.email}`),
+        axiosPrivate.get(`/users/bookmarks`),
+      ]);
+
+      const user = userResponse.data;
+      setUserData(user);
+
+      const blogPromises = user.blogs.map((blogId) => axios.get(`/${blogId}`));
       const blogResponses = (await Promise.all(blogPromises)).reverse();
       setBlogs(blogResponses.map((res) => res.data));
+
+      const bookmarkPromises = bookmarksResponse.data.map((blogId) =>
+        axios.get(`/${blogId}`)
+      );
+      const bookmarkResponses = (await Promise.all(bookmarkPromises)).reverse();
+      setBookmarkedBlogs(bookmarkResponses.map((res) => res.data));
     } catch (error) {
       if (error?.response?.data?.message) err = error.response.data.message;
       else err = error.message;
@@ -47,7 +59,7 @@ const ProfilePage = () => {
     try {
       await axiosPrivate.delete(`/${id}`, { data: { email } });
       showToast("", "Blog deleted successfully!!");
-      await getUser(); // Refresh the user data after deleting the blog
+      await getUserData(); // Refresh the user data after deleting the blog
     } catch (error) {
       if (error?.response?.data?.message) err = error.response.data.message;
       else err = error.message;
@@ -60,7 +72,7 @@ const ProfilePage = () => {
   };
 
   useEffect(() => {
-    getUser();
+    getUserData();
   }, []);
 
   return (
@@ -85,9 +97,19 @@ const ProfilePage = () => {
                   ))}
             </>
           )}
+          <p className="text-sm lg:text-md my-4 mx-2">
+            Press the{" "}
+            <b> {showBookmarkedBlogs ? "Bookmarked Blogs" : "My Blogs"}</b>{" "}
+            heading to see the magic :)
+          </p>
         </div>
         <div className="text-white w-full lg:w-2/3">
-          <h2 className="text-3xl lg:text-4xl font-bold m-2">My Blogs</h2>
+          <h2
+            className="text-3xl lg:text-4xl font-bold m-2"
+            onClick={() => setShowBookmarkedBlogs(!showBookmarkedBlogs)} // Toggle display of bookmarked blogs on click
+          >
+            {showBookmarkedBlogs ? "Bookmarked Blogs" : "My Blogs"}{" "}
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {loading ? (
               Array(3)
@@ -100,6 +122,14 @@ const ProfilePage = () => {
                     <SkeletonBlog from="ReadBlogs" />
                   </div>
                 ))
+            ) : showBookmarkedBlogs ? (
+              bookmarkedBlogs.length ? (
+                bookmarkedBlogs.map((blog) => (
+                  <BlogCard key={blog._id} blog={blog} />
+                ))
+              ) : (
+                <p className="p-2">No Bookmarked Blogs to show ... :(</p>
+              )
             ) : blogs.length ? (
               blogs.map((blog) => (
                 <BlogCard

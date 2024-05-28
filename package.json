@@ -23,6 +23,7 @@
     "react-router-dom": "^6.23.1",
     "react-scripts": "5.0.1",
     "react-toastify": "^10.0.5",
+    "react-tooltip": "^5.26.4",
     "rehype-raw": "^7.0.0",
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.0",

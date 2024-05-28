@@ -1,5 +1,3 @@
-import React from "react";
-
 const GuideLines = () => {
   return (
     <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-4 lg:p-8 min-h-screen">

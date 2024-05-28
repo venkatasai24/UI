@@ -15,6 +15,7 @@ import ViewProfilePage from "./pages/ViewProfilePage";
 import ReadTags from "./pages/ReadTags";
 import ReadCategories from "./pages/ReadCategories";
 import GuideLines from "./pages/GuideLines";
+import About from "./components/About";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/blogs/:id/edit" element={<EditBlogPage />} />
           </Route>
+          <Route path="/about" element={<About />} />
           {/* </Route> */}
           <Route path="/*" element={<NotFoundPage />} />
         </Route>
