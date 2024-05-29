@@ -5,36 +5,41 @@ import { Link } from "react-router-dom";
 const TagAndCategory = ({ blog }) => {
   return (
     <>
-      <div className="mt-2 flex items-center">
+      <div className="mt-4 flex items-start">
         {blog?.categories?.length !== 0 && (
-          <>
-            <BiCategoryAlt className="mr-2 text-teal text-sm" />
-            {blog.categories.map((category, index) => (
-              <Link
-                to={`/categories/${category}`}
-                className="text-indigo hover:underline mr-1 text-sm"
-              >
-                {category}
-                {index !== blog.categories.length - 1 && ","}
-              </Link>
-            ))}
-          </>
+          <div className="flex items-start">
+            <BiCategoryAlt className="mr-2 mt-1 text-teal text-sm flex-shrink-0" />
+            <div className="flex flex-wrap gap-1">
+              {blog.categories.map((category, index) => (
+                <Link
+                  key={index}
+                  to={`/categories/${category}`}
+                  className="text-indigo hover:underline text-sm"
+                >
+                  {category}
+                  {index !== blog.categories.length - 1 && ","}
+                </Link>
+              ))}
+            </div>
+          </div>
         )}
       </div>
-      <div className="flex items-center">
+      <div className="flex items-start">
         {blog?.tags?.length !== 0 && (
-          <>
-            <AiOutlineTags className="mr-2 text-teal text-sm" />
-            {blog.tags.map((tag, index) => (
-              <Link
-                to={`/tags/${tag}`}
-                className="text-indigo hover:underline mr-1 text-sm"
-              >
-                {tag}
-                {index !== blog.tags.length - 1 && ","}
-              </Link>
-            ))}
-          </>
+          <div className="flex items-start">
+            <AiOutlineTags className="mr-2 mt-1 text-teal text-sm flex-shrink-0" />
+            <div className="flex flex-wrap gap-1">
+              {blog.tags.map((tag, index) => (
+                <Link
+                  to={`/tags/${tag}`}
+                  className="text-indigo hover:underline text-sm"
+                >
+                  {tag}
+                  {index !== blog.tags.length - 1 && ","}
+                </Link>
+              ))}
+            </div>
+          </div>
         )}
       </div>
     </>

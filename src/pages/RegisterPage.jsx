@@ -9,6 +9,13 @@ const validatePassword = (password) => {
   return regex.test(password);
 };
 
+const validateEmail = (email) => {
+  console.log(email);
+  if (email.length === 0) return false;
+  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return emailPattern.test(email);
+};
+
 const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
@@ -38,13 +45,20 @@ const RegisterPage = () => {
       return;
     }
     // Password Validation
-    // if (!validatePassword(password)) {
-    //   setLoading(false);
-    //   err =
-    //     "Password must be at least 8 characters long and contain a lowercase letter, uppercase letter, number, and symbol.";
-    //   showToast(err, "");
-    //   return;
-    // }
+    if (!validatePassword(password)) {
+      setLoading(false);
+      err =
+        "Password must be at least 8 characters long and contain a lowercase letter, uppercase letter, number, and symbol.";
+      showToast(err, "");
+      return;
+    }
+    //email Validation
+    if (!validateEmail(email)) {
+      setLoading(false);
+      err = "Invalid email address";
+      showToast(err, "");
+      return;
+    }
     try {
       await axios.post("/users/register", {
         name,
@@ -93,4 +107,4 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
-export { validatePassword };
+export { validatePassword, validateEmail };

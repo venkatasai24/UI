@@ -6,6 +6,7 @@ import { showToast } from "../components/Toast";
 import useAuth from "../hooks/useAuth";
 import ProfileCard from "../components/ProfileCard";
 import SkeletonBlog from "../components/SkeletonBlog";
+import { validateEmail } from "./RegisterPage";
 
 const ProfilePage = () => {
   const axiosPrivate = useAxiosPrivate();
@@ -68,6 +69,20 @@ const ProfilePage = () => {
       setLoading2(false);
       setUserData(originalData);
       showToast("No changes done!!", "");
+      return;
+    }
+    // email Validation
+    if (!validateEmail(user.email)) {
+      setLoading2(false);
+      setUserData(originalData);
+      showToast("Invalid email address", "");
+      return;
+    }
+    // name Validation
+    if (user.name.length === 0) {
+      setLoading2(false);
+      setUserData(originalData);
+      showToast("Name cannot be empty!!", "");
       return;
     }
     try {

@@ -4,7 +4,7 @@ import useAuth from "../hooks/useAuth";
 import axios from "../api/axios";
 import AuthForm from "../components/AuthForm";
 import { showToast } from "../components/Toast";
-import { validatePassword } from "./RegisterPage";
+import { validatePassword, validateEmail } from "./RegisterPage";
 
 const LoginPage = () => {
   const { setAuth } = useAuth();
@@ -30,13 +30,20 @@ const LoginPage = () => {
     let err = null;
     setLoading(true);
     // Password Validation
-    // if (forgot && !validatePassword(password)) {
-    //   setLoading(false);
-    //   err =
-    //     "Password must be at least 8 characters long and contain a lowercase letter, uppercase letter, number, and symbol.";
-    //   showToast(err, "");
-    //   return;
-    // }
+    if (forgot && !validatePassword(password)) {
+      setLoading(false);
+      err =
+        "Password must be at least 8 characters long and contain a lowercase letter, uppercase letter, number, and symbol.";
+      showToast(err, "");
+      return;
+    }
+    // email Validation
+    if (!validateEmail(email)) {
+      setLoading(false);
+      err = "Invalid email address";
+      showToast(err, "");
+      return;
+    }
     try {
       const response = !forgot
         ? await axios.post(

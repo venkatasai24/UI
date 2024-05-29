@@ -91,34 +91,36 @@ const BlogPage = () => {
             <>
               <div className="w-full lg:w-70 md:w-4/5 text-left bg-white bg-opacity-30 rounded-lg shadow-lg p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h1 className="text-3xl lg:text-4xl font-bold">
+                  <h1 className="text-3xl lg:text-4xl font-bold flex-grow mr-4">
                     {blog.title}
                   </h1>
-                  {isBookmarked ? (
-                    <FaBookmark
-                      onClick={handleBookmark}
-                      className="text-teal cursor-pointer text-xl"
-                      data-tooltip-id="bookmark"
+                  <div className="flex-shrink-0">
+                    {isBookmarked ? (
+                      <FaBookmark
+                        onClick={handleBookmark}
+                        className="text-teal cursor-pointer text-xl"
+                        data-tooltip-id="bookmark"
+                      />
+                    ) : (
+                      <FaRegBookmark
+                        onClick={handleBookmark}
+                        className="text-teal cursor-pointer text-xl"
+                        data-tooltip-id="bookmark"
+                      />
+                    )}
+                    <ReactTooltip
+                      id="bookmark"
+                      place="left"
+                      variant="info"
+                      content={isBookmarked ? "Unmark me" : "Bookmark me"}
+                      style={{
+                        backgroundColor: "blue-500",
+                        borderRadius: "10px",
+                      }}
                     />
-                  ) : (
-                    <FaRegBookmark
-                      onClick={handleBookmark}
-                      className="text-teal cursor-pointer text-xl"
-                      data-tooltip-id="bookmark"
-                    />
-                  )}
-                  <ReactTooltip
-                    id="bookmark"
-                    place="left"
-                    variant="info"
-                    content={isBookmarked ? "Unmark me" : "Bookmark me"}
-                    style={{
-                      backgroundColor: "blue-500",
-                      borderRadius: "10px",
-                    }}
-                  />
+                  </div>
                 </div>
-                <p className="text-sm mb-4">
+                <p className="text-sm mb-4 truncate">
                   by{" "}
                   <Link
                     className="text-red-600 hover:underline"
@@ -129,7 +131,7 @@ const BlogPage = () => {
                   </Link>{" "}
                   , {new Date(blog.createdAt).toLocaleDateString()}
                 </p>
-                <p className="text-lg whitespace-pre-line">
+                <p className="text-lg">
                   <ReactMarkdown
                     children={blog.description}
                     remarkPlugins={[remarkGfm]}

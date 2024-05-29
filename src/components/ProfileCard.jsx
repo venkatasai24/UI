@@ -8,6 +8,12 @@ const ProfileCard = ({ userData, from, handleSubmit }) => {
   });
 
   const toggleEdit = () => {
+    if (edit === true) {
+      setUser({
+        name: userData.name,
+        email: userData.email,
+      });
+    }
     setEdit(!edit);
   };
 
@@ -20,7 +26,7 @@ const ProfileCard = ({ userData, from, handleSubmit }) => {
   };
 
   return (
-    <div className="bg-white bg-opacity-30 rounded-lg shadow-lg text-white shadow-md p-4 m-2 overflow-auto">
+    <div className="bg-white bg-opacity-30 rounded-lg shadow-lg text-white shadow-md p-4 m-2 overflow-auto break-words">
       <div className="text-xl mb-2">
         {edit ? (
           <input
@@ -28,7 +34,8 @@ const ProfileCard = ({ userData, from, handleSubmit }) => {
             type="text"
             value={user.name}
             onChange={handleChange}
-            className="bg-transparent focus:outline-none border-none"
+            className="text-black focus:outline-none border-none w-full"
+            required
           />
         ) : (
           <span>{user.name}</span>
@@ -41,7 +48,8 @@ const ProfileCard = ({ userData, from, handleSubmit }) => {
             type="email"
             value={user.email}
             onChange={handleChange}
-            className="bg-transparent focus:outline-none border-none"
+            className="text-black focus:outline-none border-none w-full"
+            required
           />
         ) : (
           <span>{user.email}</span>

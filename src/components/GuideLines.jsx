@@ -74,6 +74,13 @@ const GuideLines = () => {
         </code>
       </pre>
 
+      <p className="text-lg lg:text-xl my-2">
+        To know more about the markdown properties, visit this{" "}
+        <a href="https://www.markdownguide.org/" className="hover:underline">
+          link
+        </a>
+      </p>
+
       <hr className="my-4 border-white" />
 
       <h2 className="text-xl lg:text-2xl font-bold my-2">
