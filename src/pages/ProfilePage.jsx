@@ -13,15 +13,23 @@ const ProfilePage = () => {
   const [blogs, setBlogs] = useState([]);
   const [bookmarkedBlogs, setBookmarkedBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loading2, setLoading2] = useState(true);
   const [showBookmarkedBlogs, setShowBookmarkedBlogs] = useState(false); // State to toggle display of bookmarked blogs
-  const { auth } = useAuth();
+  const { auth, setAuth } = useAuth();
 
-  const getUserData = async () => {
+  const getUserData = async (email, accessToken) => {
     let err = null;
     setLoading(true);
+    setLoading2(true);
     try {
+      if (accessToken) {
+        // Set the access token for axiosPrivate
+        axiosPrivate.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${accessToken}`;
+      }
       const [userResponse, bookmarksResponse] = await Promise.all([
-        axios.get(`/users/profile/${auth?.email}`),
+        axios.get(`/users/profile/${email}`),
         axiosPrivate.get(`/users/bookmarks`),
       ]);
 
@@ -42,7 +50,51 @@ const ProfilePage = () => {
       else err = error.message;
     } finally {
       setLoading(false);
+      setLoading2(false);
       if (err) {
+        showToast(err, "");
+      }
+    }
+  };
+
+  const handleSubmit = async (e, user) => {
+    e.preventDefault();
+    let err = null;
+    let originalData = userData;
+    setUserData(null);
+    setLoading2(true);
+    // Check if there are any changes to be made
+    if (user.name === userData.name && user.email === userData.email) {
+      setLoading2(false);
+      setUserData(originalData);
+      showToast("No changes done!!", "");
+      return;
+    }
+    try {
+      const response = await axiosPrivate.post("/users/edit-profile", user);
+      // Update user data and auth context if email has changed
+      const updatedData = {
+        name: response.data.name,
+        email: response.data.email,
+        createdAt: response.data.createdAt,
+      };
+      setUserData(updatedData);
+      showToast("", "Profile updated successfully!!");
+      if (auth?.email !== response.data.email) {
+        setAuth({
+          email: response.data.email,
+          accessToken: response.data.accessToken,
+        });
+        await getUserData(response.data.email, response.data.accessToken);
+      }
+    } catch (error) {
+      if (error?.response?.data?.message) err = error.response.data.message;
+      else err = error.message;
+    } finally {
+      setLoading2(false);
+      // Only reset userData to original data if there was an error
+      if (err) {
+        setUserData(originalData);
         showToast(err, "");
       }
     }
@@ -59,7 +111,7 @@ const ProfilePage = () => {
     try {
       await axiosPrivate.delete(`/${id}`, { data: { email } });
       showToast("", "Blog deleted successfully!!");
-      await getUserData(); // Refresh the user data after deleting the blog
+      await getUserData(auth?.email); // Refresh the user data after deleting the blog
     } catch (error) {
       if (error?.response?.data?.message) err = error.response.data.message;
       else err = error.message;
@@ -72,7 +124,7 @@ const ProfilePage = () => {
   };
 
   useEffect(() => {
-    getUserData();
+    getUserData(auth?.email);
   }, []);
 
   return (
@@ -81,10 +133,14 @@ const ProfilePage = () => {
         <div className="text-white w-full lg:w-1/3">
           <h1 className="text-3xl lg:text-4xl font-bold m-2">Profile</h1>
           {userData ? (
-            <ProfileCard userData={userData} />
+            <ProfileCard
+              userData={userData}
+              from="ProfilePage"
+              handleSubmit={handleSubmit}
+            />
           ) : (
             <>
-              {loading &&
+              {loading2 &&
                 Array(1)
                   .fill()
                   .map((_, index) => (
@@ -97,7 +153,7 @@ const ProfilePage = () => {
                   ))}
             </>
           )}
-          <p className="text-sm lg:text-md my-4 mx-2">
+          <p className="text-md my-4 mx-2">
             Press the{" "}
             <b> {showBookmarkedBlogs ? "Bookmarked Blogs" : "My Blogs"}</b>{" "}
             heading to see the magic :)

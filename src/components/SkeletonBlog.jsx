@@ -3,7 +3,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 const SkeletonBlog = ({ from }) => {
   return (
-    <SkeletonTheme baseColor="teal" highlightColor="#ffffff">
+    <SkeletonTheme baseColor="rgba(128, 128, 128,0.2)" highlightColor="#ffffff">
       {from !== "profile" && (
         <h1 className="text-3xl lg:text-4xl font-bold mb-4">
           <Skeleton width="70%" />

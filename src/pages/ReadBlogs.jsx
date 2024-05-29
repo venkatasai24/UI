@@ -76,7 +76,7 @@ const ReadBlogs = () => {
       <div className="flex justify-center py-8 px-4 lg:px-8">
         <form
           onSubmit={handleSearch}
-          className="flex items-center mb-4 w-full lg:w-1/2 md:w-3/5"
+          className="flex items-center mt-4 w-full lg:w-1/2 md:w-3/5"
         >
           <input
             data-tooltip-id="search"
