@@ -41,33 +41,34 @@ const ReadBlogs = () => {
     }
   };
 
-  useEffect(() => {
-    const getBlogs = async () => {
-      let err = null;
-      setLoading(true); // Set loading to true before making the request
-      try {
-        const response = await axios.get("/");
-        setBlogs(response.data);
-        // Extract distinct categories from blogs
-        const distinctCategories = [
-          ...new Set(response.data.map((blog) => blog.categories).flat()),
-        ];
-        setCategories(distinctCategories);
-        // Extract distinct tags from blogs
-        const distinctTags = [
-          ...new Set(response.data.map((blog) => blog.tags).flat()),
-        ];
-        setTags(distinctTags);
-      } catch (error) {
-        if (error?.response?.data?.message) err = error.response.data.message;
-        else err = error.message;
-      } finally {
-        setLoading(false);
-        if (err) {
-          showToast(err, "");
-        }
+  const getBlogs = async () => {
+    let err = null;
+    setLoading(true); // Set loading to true before making the request
+    try {
+      const response = await axios.get("/");
+      setBlogs(response.data);
+      // Extract distinct categories from blogs
+      const distinctCategories = [
+        ...new Set(response.data.map((blog) => blog.categories).flat()),
+      ];
+      setCategories(distinctCategories);
+      // Extract distinct tags from blogs
+      const distinctTags = [
+        ...new Set(response.data.map((blog) => blog.tags).flat()),
+      ];
+      setTags(distinctTags);
+    } catch (error) {
+      if (error?.response?.data?.message) err = error.response.data.message;
+      else err = error.message;
+    } finally {
+      setLoading(false);
+      if (err) {
+        showToast(err, "");
       }
-    };
+    }
+  };
+
+  useEffect(() => {
     getBlogs();
   }, []);
 
@@ -83,7 +84,12 @@ const ReadBlogs = () => {
             type="text"
             placeholder="Search blogs..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              if (e.target.value.length === 0) {
+                getBlogs();
+              }
+            }}
             className="p-2 rounded-l-md border border-gray-300 focus:outline-none w-full"
             style={{ height: "2.5rem" }} // Set the height of the input field
           />

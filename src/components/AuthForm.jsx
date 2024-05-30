@@ -129,9 +129,9 @@ const AuthForm = ({
                 <div className="mt-2">
                   <button
                     onClick={toggleForgot}
-                    className={`text-${
-                      !forgot ? "red" : "green"
-                    }-500 hover:underline`}
+                    className={`${
+                      !forgot ? "text-red-500" : "text-green-500"
+                    } hover:underline`}
                   >
                     {!forgot ? "Forgot Password?" : "Remembered?"}
                   </button>

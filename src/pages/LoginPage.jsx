@@ -73,6 +73,7 @@ const LoginPage = () => {
         }, 2000); // Adjust the delay as needed
       } else {
         showToast("", `Your ${response.data.message}!`);
+        setForgot(false);
       }
     } catch (error) {
       if (error?.response?.data?.message) err = error.response.data.message;
