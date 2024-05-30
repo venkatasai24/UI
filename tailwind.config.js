@@ -16,15 +16,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        enforce: "pre",
-        use: ["source-map-loader"],
-        exclude: /node_modules\/(?!(parse5)\/).*/,
-      },
-    ],
-  },
+  plugins: [require("@tailwindcss/typography")],
 };

@@ -10,7 +10,6 @@ const validatePassword = (password) => {
 };
 
 const validateEmail = (email) => {
-  console.log(email);
   if (email.length === 0) return false;
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   return emailPattern.test(email);

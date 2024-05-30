@@ -1,4 +1,4 @@
-import logo from "../assets/apple-touch-icon.png";
+import logo from "../assets/logo.png";
 
 const Logo = () => {
   return (

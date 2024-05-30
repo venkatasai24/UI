@@ -8,13 +8,13 @@ import TagAndCategory from "./TagAndCategory";
 const BlogCard = ({ blog, from = "", handleDelete }) => {
   const location = useLocation();
   let classes = "bg-white bg-opacity-30 p-4 rounded-lg shadow-lg";
-  if (from === "readBlogs") classes += " m-2 w-full";
+  if (from === "readBlogs") classes += " m-2 w-full overflow-hidden";
 
   return (
     <div className={classes}>
       <Link key={blog._id} to={`/blogs/${blog._id}`} className="block">
         <h3 className="text-xl font-semibold">{blog.title}</h3>
-        <p className="mb-2 text-sm">
+        <p className="mb-2 text-sm truncate">
           by{" "}
           <Link
             className="text-red-600 hover:underline"
@@ -28,6 +28,7 @@ const BlogCard = ({ blog, from = "", handleDelete }) => {
           <ReactMarkdown
             children={blog.description.slice(0, 100) + " ..."}
             remarkPlugins={[remarkGfm]}
+            className="prose text-white"
           />
         </p>
         <TagAndCategory blog={blog} />

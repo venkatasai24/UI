@@ -135,6 +135,7 @@ const BlogPage = () => {
                   <ReactMarkdown
                     children={blog.description}
                     remarkPlugins={[remarkGfm]}
+                    className="prose text-white"
                   />
                 </p>
                 <TagAndCategory blog={blog} />

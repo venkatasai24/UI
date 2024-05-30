@@ -36,6 +36,10 @@ const About = () => {
           Click on the author's email in a blog to view their profile and
           explore all blogs written by them.
         </li>
+        <li>
+          Markdown content type is available for writing blogs, allowing you to
+          format your posts with headings, lists, links, images, and more.
+        </li>
       </ul>
 
       <h3 className="text-lg lg:text-xl font-bold my-2">User Accounts</h3>

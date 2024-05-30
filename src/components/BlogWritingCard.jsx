@@ -9,6 +9,7 @@ const BlogWritingCard = ({
   togglePreview,
   handleSubmitForm,
   saving,
+  loading,
 }) => {
   return (
     <>
@@ -73,6 +74,7 @@ const BlogWritingCard = ({
             <ReactMarkdown
               children={blog.description}
               remarkPlugins={[remarkGfm]}
+              className="prose"
             />
           </div>
         )}
@@ -98,6 +100,8 @@ const BlogWritingCard = ({
               ? saving
                 ? "Saving..."
                 : "Update"
+              : loading
+              ? "Adding..."
               : "Post"}
           </button>
         </div>

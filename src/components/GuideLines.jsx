@@ -17,6 +17,19 @@ const GuideLines = () => {
         properties:
       </p>
 
+      <h3 className="text-lg lg:text-xl font-bold my-2">Headings</h3>
+      <ul className="list-disc list-inside my-2">
+        <li>
+          H1 : <code># Heading 1</code>
+        </li>
+        <li>
+          H2 : <code>## Heading 2</code>
+        </li>
+        <li>
+          H3 : <code>### Heading 3</code>
+        </li>
+      </ul>
+
       <h3 className="text-lg lg:text-xl font-bold my-2">Text Formatting</h3>
       <ul className="list-disc list-inside my-2">
         <li>
@@ -33,7 +46,14 @@ const GuideLines = () => {
       <h3 className="text-lg lg:text-xl font-bold my-2">Links</h3>
       <ul className="list-disc list-inside my-2">
         <li>
-          [Links:](https://www.example.com) <code>[Link text](URL)</code>
+          Links : <code>[Link text](URL)</code>
+        </li>
+      </ul>
+
+      <h3 className="text-lg lg:text-xl font-bold my-2">Images</h3>
+      <ul className="list-disc list-inside my-2">
+        <li>
+          Images : <code>![Alt text](URL)</code>
         </li>
       </ul>
 
@@ -43,7 +63,14 @@ const GuideLines = () => {
           Inline Code : <code> `inline code` </code>
         </li>
         <li>
-          Code Blocks : <code>```console.log('Hello, world!');```</code>
+          Code Blocks: <br />
+          <code>
+            {"```"}
+            <br />
+            &nbsp;&nbsp;console.log('Hello, world!');
+            <br />
+            {"```"}
+          </code>
         </li>
       </ul>
 
@@ -64,21 +91,22 @@ const GuideLines = () => {
         </li>
       </ul>
 
-      <h3 className="text-lg lg:text-xl font-bold my-2">Tables</h3>
-      <pre className="bg-gray-400 p-2 rounded my-2">
-        <code>
-          {`| Header 1 | Header 2 |
-| -------- | -------- |
-| Row 1    | Data     |
-| Row 2    | More Data|`}
-        </code>
-      </pre>
-
       <p className="text-lg lg:text-xl my-2">
-        To know more about the markdown properties, visit this{" "}
-        <a href="https://www.markdownguide.org/" className="hover:underline">
+        To learn more about markdown properties, visit this{" "}
+        <a
+          href="https://www.markdownguide.org/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:underline"
+        >
           link
         </a>
+        .
+      </p>
+
+      <p className="text-md lg:text-lg my-2">
+        Note: Avoid using the <code>&lt;img&gt;</code> tag with files relative
+        to the website. Instead, use globally accessible image links.
       </p>
 
       <hr className="my-4 border-white" />
