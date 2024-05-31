@@ -8,7 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import { Route, Routes } from "react-router-dom";
 import RequireAuth from "./utils/RequireAuth";
-// import PersistLogin from "./utils/persistLogin";
+import PersistLogin from "./utils/persistLogin";
 import ProfilePage from "./pages/ProfilePage";
 import EditBlogPage from "./pages/EditBlogPage";
 import ViewProfilePage from "./pages/ViewProfilePage";
@@ -27,18 +27,18 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/read-blogs" element={<ReadBlogs />} />
           <Route path="/guidelines" element={<GuideLines />} />
+          <Route path="/about" element={<About />} />
           <Route path="/blogs/:id" element={<BlogPage />} />
           <Route path="/view-profile/:email" element={<ViewProfilePage />} />
           <Route path="/tags/:tag" element={<ReadTags />} />
           <Route path="/categories/:category" element={<ReadCategories />} />
-          {/* <Route element={<PersistLogin />}> */}
-          <Route element={<RequireAuth />}>
-            <Route path="/write-blog" element={<WriteBlog />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/blogs/:id/edit" element={<EditBlogPage />} />
+          <Route element={<PersistLogin />}>
+            <Route element={<RequireAuth />}>
+              <Route path="/write-blog" element={<WriteBlog />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/blogs/:id/edit" element={<EditBlogPage />} />
+            </Route>
           </Route>
-          <Route path="/about" element={<About />} />
-          {/* </Route> */}
           <Route path="/*" element={<NotFoundPage />} />
         </Route>
       </Routes>
