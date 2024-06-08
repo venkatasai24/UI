@@ -7,17 +7,17 @@ import SkeletonBlog from "../components/SkeletonBlog";
 import { showToast } from "../components/Toast";
 import TagAndCategory from "../components/TagAndCategory";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
-import useAuth from "../hooks/useAuth";
 import useAxiosPrivate from "../hooks/useAxiosprivate";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import { useSelector } from "react-redux";
 
 const BlogPage = () => {
   const { id } = useParams();
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isBookmarked, setIsBookmarked] = useState(false);
-  const { auth } = useAuth();
+  const auth = useSelector((state) => state.auth);
   const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {

@@ -1,8 +1,8 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
+import { useSelector } from "react-redux";
 
 const RequireAuth = () => {
-  const { auth } = useAuth();
+  const auth = useSelector((state) => state.auth);
   const location = useLocation();
 
   return auth?.email ? (

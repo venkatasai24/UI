@@ -1,13 +1,14 @@
 import useAxiosPrivate from "./useAxiosprivate";
-import useAuth from "./useAuth";
 import { showToast } from "../components/Toast";
+import { useDispatch } from "react-redux";
+import { logOut } from "../features/auth/authSlice";
 
 const useLogout = () => {
-  const { setAuth } = useAuth();
+  const dispatch = useDispatch();
   const axiosPrivate = useAxiosPrivate();
 
   const logout = async () => {
-    setAuth({});
+    dispatch(logOut({}));
     try {
       await axiosPrivate("/users/logout");
       showToast("", "Logged out successfully!!");

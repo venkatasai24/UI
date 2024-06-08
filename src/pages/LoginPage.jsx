@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
 import axios from "../api/axios";
 import AuthForm from "../components/AuthForm";
 import { showToast } from "../components/Toast";
 import { validatePassword, validateEmail } from "./RegisterPage";
+import { useDispatch } from "react-redux";
+import { setAuth } from "../features/auth/authSlice";
 
 const LoginPage = () => {
-  const { setAuth } = useAuth();
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -65,7 +66,12 @@ const LoginPage = () => {
       setLoading(false);
       if (!forgot) {
         const accessToken = response?.data?.accessToken;
-        setAuth({ email, accessToken });
+        dispatch(
+          setAuth({
+            email,
+            accessToken,
+          })
+        );
         showToast("", `Hi ${email}!`);
         // Delay navigation to ensure toast is displayed
         setTimeout(() => {

@@ -3,10 +3,11 @@ import useAxiosPrivate from "../hooks/useAxiosprivate";
 import axios from "../api/axios";
 import BlogCard from "../components/BlogCard";
 import { showToast } from "../components/Toast";
-import useAuth from "../hooks/useAuth";
 import ProfileCard from "../components/ProfileCard";
 import SkeletonBlog from "../components/SkeletonBlog";
 import { validateEmail } from "./RegisterPage";
+import { useDispatch, useSelector } from "react-redux";
+import { setAuth } from "../features/auth/authSlice";
 
 const ProfilePage = () => {
   const axiosPrivate = useAxiosPrivate();
@@ -16,7 +17,8 @@ const ProfilePage = () => {
   const [loading, setLoading] = useState(true);
   const [loading2, setLoading2] = useState(true);
   const [showBookmarkedBlogs, setShowBookmarkedBlogs] = useState(false); // State to toggle display of bookmarked blogs
-  const { auth, setAuth } = useAuth();
+  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   const getUserData = async (email, accessToken) => {
     let err = null;
@@ -96,10 +98,14 @@ const ProfilePage = () => {
       setUserData(updatedData);
       showToast("", "Profile updated successfully!!");
       if (auth?.email !== response.data.email) {
-        setAuth({
-          email: response.data.email,
-          accessToken: response.data.accessToken,
-        });
+        dispatch(
+          setAuth({
+            email: response.data.email,
+            accessToken: response.data.accessToken,
+          })
+        );
+        // setAuth({
+        // });
         await getUserData(response.data.email, response.data.accessToken);
       }
     } catch (error) {

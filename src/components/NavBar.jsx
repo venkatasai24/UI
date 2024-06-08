@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useLogout from "../hooks/useLogout";
-import useAuth from "../hooks/useAuth";
 import Logo from "./Logo";
+import { useSelector } from "react-redux";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const { auth } = useAuth();
+  const auth = useSelector((state) => state.auth);
   const logout = useLogout();
 
   const signOut = async () => {

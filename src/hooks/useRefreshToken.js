@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import useAuth from "./useAuth";
 import axios from "../api/axios";
+import { useDispatch } from "react-redux";
+import { setAuth } from "../features/auth/authSlice";
 
 const useRefreshToken = () => {
-  const { setAuth } = useAuth();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const refresh = async () => {
@@ -11,14 +12,12 @@ const useRefreshToken = () => {
       const response = await axios.get("/users/refresh", {
         withCredentials: true,
       });
-      setAuth((prev) => {
-        // console.log(JSON.stringify(prev));
-        // console.log(response.data);
-        return {
-          accessToken: response.data.accessToken,
+      dispatch(
+        setAuth({
+          accessToken: response.data?.accessToken,
           email: response.data?.email,
-        };
-      });
+        })
+      );
       return response.data.accessToken;
     } catch (err) {
       console.error(err);
